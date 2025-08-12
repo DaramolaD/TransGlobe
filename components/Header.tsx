@@ -199,11 +199,6 @@ export default function Header() {
         ]
       }
     },
-    { 
-      name: "Contact", 
-      href: "/contact",
-      simple: true
-    }
   ];
 
   const isActive = (href: string) => {
