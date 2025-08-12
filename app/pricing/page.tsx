@@ -9,7 +9,7 @@ import {
   Package,
   Truck,
   Plane,
-  Ship,
+  // Ship,
   Users,
   Shield,
   Zap,
@@ -223,7 +223,7 @@ export default function PricingPage() {
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <h4 className="font-semibold text-green-600 mb-3">What's Included:</h4>
+                  <h4 className="font-semibold text-green-600 mb-3">What&apos;s Included:</h4>
                   {plan.features.map((feature) => (
                     <div key={feature} className="flex items-center space-x-3">
                       <Check className="w-5 h-5 text-green-500 flex-shrink-0" />

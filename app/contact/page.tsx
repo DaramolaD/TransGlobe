@@ -9,9 +9,9 @@ import {
   MessageSquare,
   ArrowRight,
   Send,
-  Globe,
+  // Globe,
   Users,
-  Shield,
+  // Shield,
   CheckCircle
 } from "lucide-react";
 
@@ -136,7 +136,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-4xl lg:text-5xl font-display font-bold mb-8">
-                Let's Start a{" "}
+                Let&apos;s Start a{" "}
                 <span className="text-gradient">Conversation</span>
               </h2>
               
@@ -478,7 +478,7 @@ export default function ContactPage() {
               <span className="text-gradient">Started?</span>
             </h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed">
-              Don't wait to optimize your logistics operations. Contact us today and 
+              Don&apos;t wait to optimize your logistics operations. Contact us today and 
               discover how SwiftCargo can transform your supply chain.
             </p>
             

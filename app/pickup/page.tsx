@@ -5,18 +5,23 @@ import { motion } from "framer-motion";
 import { 
   Package, 
   Truck, 
-  Calendar, 
+  // Calendar, 
   Clock, 
   MapPin, 
   User, 
-  Phone, 
-  Mail, 
+  // Phone, 
+  // Mail, 
   MessageSquare,
   ArrowRight,
   CheckCircle,
   AlertCircle,
   Send
 } from "lucide-react";
+
+// Add proper types at the top
+interface FormErrors {
+  [key: string]: string;
+}
 
 export default function PickupPage() {
   const [formData, setFormData] = useState({
@@ -40,7 +45,7 @@ export default function PickupPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -51,7 +56,7 @@ export default function PickupPage() {
     
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev: FormErrors) => ({
         ...prev,
         [name]: ""
       }));
@@ -59,7 +64,7 @@ export default function PickupPage() {
   };
 
   const validateForm = () => {
-    const newErrors: any = {};
+    const newErrors: FormErrors = {};
     
     if (!formData.pickupDate) newErrors.pickupDate = "Pickup date is required";
     if (!formData.pickupTime) newErrors.pickupTime = "Pickup time is required";
@@ -150,7 +155,7 @@ export default function PickupPage() {
           </h1>
           
           <p className="text-xl text-muted-foreground mb-8">
-            Thank you for your pickup request. We've sent a confirmation email to{" "}
+            Thank you for your pickup request. We&apos;ve sent a confirmation email to{" "}
             <span className="font-semibold">{formData.contactEmail}</span> with your pickup details.
           </p>
           
@@ -197,7 +202,7 @@ export default function PickupPage() {
               <span className="text-gradient">Pickup</span>
             </h1>
             <p className="text-xl text-white/90 leading-relaxed">
-              Request a pickup for your shipment and we'll collect it from your location. 
+              Request a pickup for your shipment and we&apos;ll collect it from your location. 
               Fast, reliable, and convenient pickup services available worldwide.
             </p>
           </motion.div>
@@ -219,7 +224,7 @@ export default function PickupPage() {
                 Request Your Pickup
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Fill out the form below and we'll schedule a pickup at your convenience. 
+                Fill out the form below and we&apos;ll schedule a pickup at your convenience. 
                 Our team will contact you to confirm the details.
               </p>
             </motion.div>

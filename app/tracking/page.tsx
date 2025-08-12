@@ -8,7 +8,7 @@ import {
   Truck, 
   Plane, 
   Ship, 
-  Train,
+  // Train,
   MapPin,
   Clock,
   CheckCircle,
@@ -17,10 +17,36 @@ import {
   Calendar,
   User
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+// Add proper types at the top
+interface TimelineEvent {
+  date: string;
+  time: string;
+  status: string;
+  location: string;
+  description: string;
+  icon: LucideIcon;
+  completed: boolean;
+}
+
+interface TrackingResult {
+  number: string;
+  status: string;
+  statusColor: string;
+  statusIcon: LucideIcon;
+  origin: string;
+  destination: string;
+  service: string;
+  serviceIcon: LucideIcon;
+  estimatedDelivery: string;
+  currentLocation: string;
+  timeline: TimelineEvent[];
+}
 
 export default function TrackingPage() {
   const [trackingNumber, setTrackingNumber] = useState("");
-  const [trackingResult, setTrackingResult] = useState<any>(null);
+  const [trackingResult, setTrackingResult] = useState<TrackingResult | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
   // Mock tracking data
@@ -42,7 +68,7 @@ export default function TrackingPage() {
           time: "14:30",
           status: "Shipment Picked Up",
           location: "Shanghai, China",
-          description: "Package collected from sender's location",
+          description: "Package collected from sender&apos;s location",
           icon: Package,
           completed: true
         },
@@ -167,18 +193,18 @@ export default function TrackingPage() {
     }, 1500);
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "In Transit":
-        return Truck;
-      case "Delivered":
-        return CheckCircle;
-      case "Delayed":
-        return AlertCircle;
-      default:
-        return Package;
-    }
-  };
+  // const getStatusIcon = (status: string) => {
+  //   switch (status) {
+  //     case "In Transit":
+  //       return Truck;
+  //     case "Delivered":
+  //       return CheckCircle;
+  //     case "Delayed":
+  //       return AlertCircle;
+  //     default:
+  //       return Package;
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-background">
@@ -333,12 +359,12 @@ export default function TrackingPage() {
                 <div className="p-6">
                   <h4 className="text-lg font-semibold mb-6">Shipment Timeline</h4>
                   <div className="space-y-6">
-                    {trackingResult.timeline.map((event: any, index: number) => (
+                    {trackingResult.timeline.map((event: TimelineEvent) => (
                       <motion.div
-                        key={index}
+                        key={`${event.date}-${event.time}-${event.status}`}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        transition={{ duration: 0.6, delay: 0.1 * trackingResult.timeline.indexOf(event) }}
                         className="flex items-start space-x-4"
                       >
                         <div className="flex flex-col items-center">
@@ -349,7 +375,7 @@ export default function TrackingPage() {
                               event.completed ? 'text-green-600' : 'text-slate-400'
                             }`} />
                           </div>
-                          {index < trackingResult.timeline.length - 1 && (
+                          {trackingResult.timeline.indexOf(event) < trackingResult.timeline.length - 1 && (
                             <div className={`w-0.5 h-8 mt-2 ${
                               event.completed ? 'bg-green-200' : 'bg-slate-200'
                             }`}></div>

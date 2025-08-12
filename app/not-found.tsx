@@ -7,8 +7,8 @@ import {
   ArrowLeft, 
   Search,
   Truck,
-  Ship,
-  Plane
+  // Ship,
+  // Plane
 } from "lucide-react";
 import Link from "next/link";
 
@@ -50,7 +50,7 @@ export default function NotFound() {
               <span className="text-gradient">Found</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Oops! It looks like this logistics route has been diverted. The page you're looking for 
+              Oops! It looks like this logistics route has been diverted. The page you&apos;re looking for 
               might have been moved, deleted, or never existed in the first place.
             </p>
           </motion.div>
@@ -134,7 +134,7 @@ export default function NotFound() {
             className="max-w-2xl mx-auto"
           >
             <h3 className="text-xl font-semibold mb-4">
-              Can't find what you're looking for?
+              Can&apos;t find what you&apos;re looking for?
             </h3>
             <div className="relative">
               <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { 
-  Building2, 
+  // Building2, 
   ShoppingCart, 
   Car, 
   Heart,
@@ -193,7 +193,7 @@ export default function SolutionsPage() {
               <span className="text-gradient">Solutions</span>
             </h1>
             <p className="text-xl text-white/90 leading-relaxed">
-              Tailored logistics solutions designed specifically for your industry's unique 
+              Tailored logistics solutions designed specifically for your industry&apos;s unique 
               requirements and challenges. We understand your business and deliver results.
             </p>
           </motion.div>
