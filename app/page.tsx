@@ -17,9 +17,9 @@ import {
   Search,
   Calculator,
   MapPin,
-  Calendar,
-  Weight,
-  Ruler
+  // Calendar,
+  // Weight,
+  // Ruler
 } from "lucide-react";
 import Header from "@/components/Header";
 import { useState } from "react";
@@ -221,7 +221,7 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-bold text-foreground">Track Your Shipment</h3>
                       <p className="text-muted-foreground max-w-md mx-auto">
-                        Enter your tracking number to get real-time updates on your shipment's location and status.
+                        Enter your tracking number to get real-time updates on your shipment&apos;s location and status.
                       </p>
                     </div>
                     
@@ -264,7 +264,7 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-bold text-foreground">Schedule a Pickup</h3>
                       <p className="text-muted-foreground max-w-md mx-auto">
-                        Fill out the form below to schedule a pickup from your location. We'll confirm within 2 hours.
+                        Fill out the form below to schedule a pickup from your location. We&apos;ll confirm within 2 hours.
                       </p>
                     </div>
                     

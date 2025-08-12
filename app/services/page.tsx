@@ -12,7 +12,7 @@ import {
   Globe,
   Clock,
   Shield,
-  Zap,
+  // Zap,
   Target,
   Users,
   BarChart3,
@@ -384,7 +384,7 @@ export default function ServicesPage() {
               <span className="text-gradient">Solutions</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Tailored logistics solutions designed specifically for your industry's unique 
+              Tailored logistics solutions designed specifically for your industry&apos;s unique 
               requirements and challenges.
             </p>
               </motion.div>

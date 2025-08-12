@@ -12,11 +12,25 @@ import {
   Train,
   ArrowRight,
   CheckCircle,
-  AlertCircle,
+  // AlertCircle,
   DollarSign,
   Clock,
   Weight
 } from "lucide-react";
+
+// Add proper types at the top
+interface Estimate {
+  basePrice: string;
+  packageMultiplier: number;
+  insuranceCost: string;
+  expressCost: string;
+  totalPrice: string;
+  serviceName: string;
+  deliveryTime: string;
+  weight: string;
+  origin: string;
+  destination: string;
+}
 
 export default function EstimatorPage() {
   const [formData, setFormData] = useState({
@@ -30,7 +44,7 @@ export default function EstimatorPage() {
     express: false
   });
 
-  const [estimate, setEstimate] = useState<any>(null);
+  const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -446,7 +460,7 @@ export default function EstimatorPage() {
                     <Calculator className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-xl font-semibold mb-2">No Estimate Yet</h3>
                     <p className="text-muted-foreground">
-                      Fill out the form on the left and click "Calculate Estimate" 
+                      Fill out the form on the left and click &quot;Calculate Estimate&quot; 
                       to get your shipping cost estimate.
                     </p>
                   </div>
@@ -487,7 +501,7 @@ export default function EstimatorPage() {
               {
                 icon: DollarSign,
                 title: "Transparent Pricing",
-                description: "See exactly what you're paying for with detailed cost breakdowns"
+                description: "See exactly what you&apos;re paying for with detailed cost breakdowns"
               },
               {
                 icon: Clock,

@@ -9,12 +9,12 @@ import {
   Shield, 
   Zap,
   ArrowRight,
-  Check,
-  Package,
-  Truck,
-  Ship,
-  Plane,
-  Train
+  // Check,
+  // Package,
+  // Truck,
+  // Ship,
+  // Plane,
+  // Train
 } from "lucide-react";
 
 export default function AboutPage() {
@@ -111,8 +111,8 @@ export default function AboutPage() {
               <span className="text-gradient">SwiftCargo</span>
             </h1>
             <p className="text-xl text-white/90 leading-relaxed">
-              We're more than a logistics company – we're your strategic partner in global business success. 
-              With over 25 years of experience, we've built a reputation for reliability, innovation, 
+              We&apos;re more than a logistics company - we&apos;re your strategic partner in global business success. 
+              With over 25 years of experience, we&apos;ve built a reputation for reliability, innovation, 
               and customer-centric solutions that drive business growth.
             </p>
           </motion.div>
@@ -155,13 +155,13 @@ export default function AboutPage() {
                 <span className="text-gradient">Vision</span>
               </h2>
               <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                To be the world's most trusted and innovative logistics partner, setting new standards 
+                To be the world&apos;s most trusted and innovative logistics partner, setting new standards 
                 for excellence in global supply chain management.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We envision a future where logistics is not just a service, but a strategic advantage 
                 that enables businesses to thrive in an interconnected world. Through technology, 
-                sustainability, and unwavering commitment to our clients, we're building that future today.
+                sustainability, and unwavering commitment to our clients, we&apos;re building that future today.
               </p>
             </motion.div>
           </div>
@@ -228,7 +228,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               From humble beginnings to global logistics leader, discover the key milestones 
-              that shaped SwiftCargo's success story.
+              that shaped SwiftCargo&apos;s success story.
             </p>
           </motion.div>
 
@@ -275,7 +275,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Our experienced leadership team brings decades of combined expertise in logistics, 
-              technology, and business strategy to drive SwiftCargo's continued success.
+              technology, and business strategy to drive SwiftCargo&apos;s continued success.
             </p>
           </motion.div>
 
@@ -380,7 +380,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               Join thousands of businesses that trust us with their logistics needs. 
-              Let's discuss how we can help your business grow globally.
+              Let&apos;s discuss how we can help your business grow globally.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

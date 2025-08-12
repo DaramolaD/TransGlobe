@@ -285,7 +285,7 @@ export default function Header() {
                             
                             {/* Right Column - Service Items */}
                             <div className="col-span-2 grid grid-cols-2 gap-6">
-                              {item.content.items.map((subItem, index) => (
+                              {item.content.items.map((subItem) => (
                                 <NavigationMenuLink asChild key={subItem.title}>
                                   <Link
                                     href={subItem.href}
