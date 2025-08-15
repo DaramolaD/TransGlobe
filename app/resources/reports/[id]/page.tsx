@@ -344,7 +344,7 @@ export default async function ReportDetailPage({ params }: PageProps) {
             {industryReports
               .filter((r) => r.id !== report.id)
               .slice(0, 3)
-              .map((relatedReport, index) => (
+              .map((relatedReport) => (
                 <div
                   key={relatedReport.id}
                   // initial={{ opacity: 0, y: 60 }}
