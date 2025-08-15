@@ -7,7 +7,6 @@ import {
   Clock,
   TrendingUp,
   ArrowLeft,
-  CheckCircle,
   ArrowRight,
   Building,
   Target,
@@ -214,7 +213,7 @@ export default function CaseStudiesPage() {
               <span className="text-gradient">Transform</span>
             </h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed">
-              Inspired by these success stories? Let's discuss how we can help 
+              Inspired by these success stories? Let&apos;s discuss how we can help 
               transform your logistics operations and achieve similar results.
             </p>
             
