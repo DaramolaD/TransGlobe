@@ -19,7 +19,11 @@ import {
   Zap,
   Clock,
   MapPin,
-  Award
+  Award,
+  ShoppingCart,
+  Factory,
+  Car,
+  Heart,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -38,91 +42,165 @@ export default function Header() {
   const pathname = usePathname();
 
   const navigation = [
-    { 
-      name: "Home", 
+    {
+      name: "Home",
       href: "/",
-      simple: true
+      simple: true,
     },
-    { 
-      name: "Services", 
+    {
+      name: "Services",
       href: "/services",
       dropdown: true,
       content: {
         title: "Our Services",
-        description: "Comprehensive logistics solutions tailored to your business needs",
+        description:
+          "Comprehensive logistics solutions tailored to your business needs",
         items: [
           {
             icon: Plane,
             title: "Air Freight",
             description: "Express worldwide air cargo with real-time tracking",
-            href: "/services/air-freight",
-            features: ["24/7 Monitoring", "Customs Clearance", "Real-time Tracking"]
+            href: "/services/#air-freight",
+            features: [
+              "24/7 Monitoring",
+              "Customs Clearance",
+              "Real-time Tracking",
+            ],
           },
           {
             icon: Ship,
             title: "Sea Freight",
             description: "Cost-effective ocean freight for large shipments",
-            href: "/services/sea-freight",
-            features: ["Bulk Capacity", "Global Reach", "Warehousing"]
+            href: "/services/#sea-freight",
+            features: ["Bulk Capacity", "Global Reach", "Warehousing"],
           },
           {
             icon: Truck,
             title: "Road Freight",
             description: "Reliable ground transportation across continents",
-            href: "/services/road-freight",
-            features: ["Door-to-Door", "Flexible Routes", "High Capacity"]
+            href: "/services/#road-freight",
+            features: ["Door-to-Door", "Flexible Routes", "High Capacity"],
           },
           {
             icon: Train,
             title: "Rail Freight",
-            description: "Efficient rail solutions for cross-continental transport",
-            href: "/services/rail-freight",
-            features: ["High Volume", "Eco-friendly", "Reliable Schedule"]
-          }
-        ]
-      }
+            description:
+              "Efficient rail solutions for cross-continental transport",
+            href: "/services/#rail-freight",
+            features: ["High Volume", "Eco-friendly", "Reliable Schedule"],
+          },
+        ],
+      },
     },
-    { 
-      name: "Solutions", 
+    {
+      name: "Solutions",
       href: "/solutions",
       dropdown: true,
       content: {
-        title: "Business Solutions",
-        description: "Innovative logistics solutions for modern businesses",
+        title: "Industry Solutions",
+        description:
+          "Tailored logistics solutions for specific industries and technologies",
         items: [
           {
-            icon: Globe,
-            title: "Global Supply Chain",
-            description: "End-to-end supply chain management worldwide",
-            href: "/solutions/supply-chain",
-            features: ["Multi-modal", "Real-time Visibility", "Risk Management"]
+            icon: ShoppingCart,
+            title: "E-commerce & Retail",
+            description: "End-to-end logistics for online retailers and stores",
+            href: "/solutions/#ecommerce-retail",
+            features: [
+              "Same-day Delivery",
+              "Returns Management",
+              "Inventory Optimization",
+            ],
           },
           {
-            icon: BarChart3,
-            title: "Analytics & Insights",
-            description: "Data-driven logistics optimization",
-            href: "/solutions/analytics",
-            features: ["Performance Metrics", "Predictive Analytics", "Cost Optimization"]
+            icon: Factory,
+            title: "Manufacturing",
+            description: "Supply chain solutions for industrial production",
+            href: "/solutions/#manufacturing",
+            features: [
+              "Just-in-time Inventory",
+              "Quality Control",
+              "Lead Time Optimization",
+            ],
+          },
+          {
+            icon: Car,
+            title: "Automotive",
+            description: "Specialized logistics for vehicle manufacturing",
+            href: "/solutions/#automotive",
+            features: [
+              "Parts Distribution",
+              "Vehicle Transport",
+              "Aftermarket Support",
+            ],
+          },
+          {
+            icon: Heart,
+            title: "Healthcare & Pharma",
+            description: "Temperature-controlled medical logistics",
+            href: "/solutions/#healthcare-pharma",
+            features: [
+              "Cold Chain Logistics",
+              "Regulatory Compliance",
+              "Emergency Response",
+            ],
+          },
+          {
+            icon: Zap,
+            title: "AI-Powered Analytics",
+            description: "Machine learning for logistics optimization",
+            href: "/solutions/#ai-analytics",
+            features: [
+              "Predictive Analytics",
+              "Route Optimization",
+              "Cost Analysis",
+            ],
+          },
+          {
+            icon: Globe,
+            title: "Real-time Tracking",
+            description: "Live visibility into your shipments",
+            href: "/solutions/#real-time-tracking",
+            features: ["GPS Tracking", "Status Updates", "ETA Predictions"],
           },
           {
             icon: Shield,
-            title: "Risk Management",
-            description: "Comprehensive risk mitigation strategies",
-            href: "/solutions/risk-management",
-            features: ["Insurance Coverage", "Compliance", "Contingency Planning"]
+            title: "Security & Compliance",
+            description: "Advanced security and regulatory compliance",
+            href: "/solutions/#security-compliance",
+            features: [
+              "Cargo Insurance",
+              "Regulatory Compliance",
+              "Security Protocols",
+            ],
+          },
+          {
+            icon: Clock,
+            title: "Predictive ETA",
+            description: "Accurate delivery time predictions",
+            href: "/solutions/#predictive-eta",
+            features: [
+              "ML Algorithms",
+              "Real-time Updates",
+              "Traffic Analysis",
+            ],
           },
           {
             icon: Users,
-            title: "Enterprise Solutions",
-            description: "Custom solutions for large organizations",
-            href: "/solutions/enterprise",
-            features: ["Dedicated Teams", "Custom Integration", "Priority Support"]
-          }
-        ]
-      }
+            title: "Success Stories",
+            description: "Real case studies from our clients",
+            href: "/solutions/#techcorp-electronics",
+            features: [
+              "TechCorp Electronics",
+              "Global Fashion Retail",
+              "PharmaCare Solutions",
+            ],
+          },
+        ],
+      },
     },
-    { 
-      name: "Company", 
+    {
+      name: "Company",
       href: "/about",
       dropdown: true,
       content: {
@@ -133,36 +211,44 @@ export default function Header() {
             icon: Users,
             title: "Our Team",
             description: "Meet the experts behind our success",
-            href: "/about/team",
-            features: ["Industry Veterans", "Global Network", "24/7 Support"]
-          },
-          {
-            icon: Award,
-            title: "Our Story",
-            description: "25+ years of logistics excellence",
-            href: "/about/story",
-            features: ["Founded 1999", "Global Expansion", "Innovation Focus"]
-          },
-          {
-            icon: MapPin,
-            title: "Global Presence",
-            description: "Serving 150+ countries worldwide",
-            href: "/about/global-presence",
-            features: ["150+ Countries", "Local Expertise", "Cultural Understanding"]
+            href: "/about/#david-chen",
+            features: ["Industry Veterans", "Global Network", "24/7 Support"],
           },
           {
             icon: Clock,
-            title: "Timeline",
+            title: "Our Story",
+            description: "25+ years of logistics excellence",
+            href: "/about/#story",
+            features: ["Founded 1999", "Global Expansion", "Innovation Focus"],
+          },
+          {
+            icon: Award,
+            title: "Awards & Recognition",
+            description: "Industry recognition for excellence",
+            href: "/about/#awards",
+            features: [
+              "Logistics Excellence",
+              "Innovation Award",
+              "Best Air Freight",
+            ],
+          },
+          {
+            icon: MapPin,
+            title: "Company Timeline",
             description: "Key milestones in our journey",
-            href: "/about/timeline",
-            features: ["1999 Founded", "2005 Global Expansion", "2024 Innovation Hub"]
-          }
-        ]
-      }
+            href: "/about/#company-founded",
+            features: [
+              "1999 Founded",
+              "2005 Global Expansion",
+              "2024 Innovation Hub",
+            ],
+          },
+        ],
+      },
     },
-    { 
-      name: "Resources", 
-      href: "/blog",
+    {
+      name: "Resources",
+      href: "/resources",
       dropdown: true,
       content: {
         title: "Resources & Insights",
@@ -171,33 +257,33 @@ export default function Header() {
           {
             icon: BarChart3,
             title: "Industry Reports",
-            description: "Latest logistics industry insights",
-            href: "/resources/reports",
-            features: ["Quarterly Updates", "Market Analysis", "Trend Reports"]
+            description: "Latest logistics industry insights and market analysis",
+            href: "/resources/#reports",
+            features: ["Q4 2024 Report", "Supply Chain Resilience", "E-commerce Trends"],
           },
           {
             icon: Users,
             title: "Case Studies",
-            description: "Real success stories from our clients",
-            href: "/resources/case-studies",
-            features: ["Client Success", "Problem Solving", "Results Driven"]
+            description: "Real success stories from our clients across industries",
+            href: "/resources/#case-studies",
+            features: ["TechCorp Electronics", "Global Fashion Retail", "PharmaCare Solutions"],
           },
           {
             icon: Zap,
             title: "Best Practices",
-            description: "Expert tips for logistics optimization",
-            href: "/resources/best-practices",
-            features: ["Efficiency Tips", "Cost Savings", "Risk Mitigation"]
+            description: "Expert tips and proven methodologies for logistics optimization",
+            href: "/resources/#best-practices",
+            features: ["Inventory Optimization", "Route Optimization", "Supplier Management"],
           },
           {
             icon: Globe,
             title: "Global Insights",
-            description: "Regional logistics expertise and trends",
-            href: "/resources/global-insights",
-            features: ["Regional Focus", "Cultural Context", "Local Expertise"]
-          }
-        ]
-      }
+            description: "Regional expertise and market opportunities worldwide",
+            href: "/resources/#global-insights",
+            features: ["Asia-Pacific", "Europe", "North America", "Africa"],
+          },
+        ],
+      },
     },
   ];
 
@@ -212,7 +298,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-custom border-b border-border/50">
+    <header className="fixed top-0 w-full z-50 bg-slate-900 backdrop-blur-xl border-b border-black/20 shadow-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -226,7 +312,9 @@ export default function Header() {
               <div className="w-10 h-10 bg-gradient rounded-lg flex items-center justify-center">
                 <Package className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-display font-bold text-gradient">SwiftCargo</span>
+              <span className="text-2xl font-display font-bold text-gradient">
+                SwiftCargo
+              </span>
             </motion.div>
           </Link>
 
@@ -237,25 +325,27 @@ export default function Header() {
             {navigation.map((item) => (
                   <NavigationMenuItem key={item.name}>
                     {item.dropdown ? (
-                      <NavigationMenuTrigger className="bg-transparent hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 data-[state=open]:bg-gradient-to-r data-[state=open]:from-primary/10 data-[state=open]:to-primary/5 border-none shadow-none px-4 py-2 h-auto text-foreground/80 hover:text-foreground data-[state=open]:text-foreground rounded-lg transition-all duration-300 hover:scale-105">
+                      <NavigationMenuTrigger className="bg-transparent hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 data-[state=open]:bg-gradient-to-r data-[state=open]:from-primary/10 data-[state=open]:to-primary/5 border-none shadow-none px-4 py-2 h-auto text-white hover:text-foreground data-[state=open]:text-foreground rounded-lg transition-all duration-300 hover:scale-105">
                         {item.name}
                       </NavigationMenuTrigger>
                     ) : (
                       <NavigationMenuLink asChild>
               <Link
                 href={item.href}
-                          className={`block px-4 py-2 text-foreground/80 hover:text-foreground transition-all duration-300 font-medium rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:scale-105 ${
-                            isActive(item.href) ? "text-primary bg-gradient-to-r from-primary/10 to-primary/5" : ""
+                          className={`block px-4 py-2 text-white hover:text-foreground transition-all duration-300 font-medium rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:scale-105 ${
+                  isActive(item.href)
+                              ? "text-primary bg-gradient-to-r from-primary/10 to-primary/5"
+                              : ""
                 }`}
               >
                 {item.name}
               </Link>
                       </NavigationMenuLink>
                     )}
-                    
+
                     {item.dropdown && (
                       <NavigationMenuContent>
-                        <div className="w-[900px] p-8 bg-white/95 backdrop-blur-xl border border-border/20 shadow-2xl rounded-2xl">
+                        <div className="w-[900px] p-8 bg-white/20 backdrop-blur-2xl border border-white/30 shadow-2xl rounded-2xl">
                           <div className="grid grid-cols-3 gap-10">
                             {/* Left Column - Title and Description */}
                             <div className="col-span-1 space-y-6">
@@ -268,16 +358,18 @@ export default function Header() {
                                 </p>
                               </div>
                               <div className="pt-4">
-                                <Link 
+                                <Link
                                   href={item.href}
                                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm transition-colors group"
                                 >
-                                  <span className="mr-2">View All {item.name}</span>
+                                  <span className="mr-2">
+                                    View All {item.name}
+                                  </span>
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                               </div>
                             </div>
-                            
+
                             {/* Right Column - Service Items */}
                             <div className="col-span-2 grid grid-cols-2 gap-6">
                               {item.content.items.map((subItem) => (
@@ -298,14 +390,16 @@ export default function Header() {
                                           {subItem.description}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
-                                          {subItem.features.slice(0, 2).map((feature) => (
-                                            <span
-                                              key={feature}
-                                              className="inline-block px-3 py-1.5 bg-gradient-to-r from-primary/10 to-primary/20 text-primary/80 group-hover:from-primary/20 group-hover:to-primary/30 group-hover:text-primary transition-all duration-300 text-xs rounded-lg font-medium border border-primary/10 group-hover:border-primary/20"
-                                            >
-                                              {feature}
-                                            </span>
-                                          ))}
+                                          {subItem.features
+                                            .slice(0, 2)
+                                            .map((feature) => (
+                                              <span
+                                                key={feature}
+                                                className="inline-block px-3 py-1.5 bg-gradient-to-r from-primary/10 to-primary/20 text-primary/80 group-hover:from-primary/20 group-hover:to-primary/30 group-hover:text-primary transition-all duration-300 text-xs rounded-lg font-medium border border-primary/10 group-hover:border-primary/20"
+                                              >
+                                                {feature}
+                                              </span>
+                                            ))}
                                         </div>
                                       </div>
                                     </div>
@@ -324,10 +418,10 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden xl:flex items-center space-x-4">
             <Link href="/contact">
               <motion.button
-                className="px-6 py-2 text-foreground hover:text-primary transition-colors font-medium"
+                className="px-6 py-2 text-white hover:text-white transition-colors font-medium"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -347,15 +441,15 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden p-2"
+            className="xl:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-foreground" />
+              <X className="w-6 h-6 text-white" />
             ) : (
-              <Menu className="w-6 h-6 text-foreground" />
+              <Menu className="w-6 h-6 text-white" />
             )}
           </motion.button>
         </div>
@@ -368,7 +462,7 @@ export default function Header() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden mt-4 pt-4 border-t border-border/50"
+              className="xl:hidden mt-4 pt-4 border-t border-border/50"
             >
               <div className="space-y-4">
                 {navigation.map((item) => (
@@ -377,16 +471,16 @@ export default function Header() {
                       <div className="space-y-3">
                         <button
                           onClick={() => toggleDropdown(item.name)}
-                          className="flex items-center justify-between w-full py-3 px-3 font-medium text-foreground/80 hover:text-foreground hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300 rounded-lg"
+                          className="flex items-center justify-between w-full py-3 px-3 font-medium text-white hover:text-white hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300 rounded-lg"
                         >
                           <span>{item.name}</span>
-                          <ChevronDown 
+                          <ChevronDown
                             className={`w-4 h-4 transition-transform duration-200 ${
-                              openDropdown === item.name ? 'rotate-180' : ''
+                              openDropdown === item.name ? "rotate-180" : ""
                             }`}
                           />
                         </button>
-                        
+
                         <AnimatePresence>
                           {openDropdown === item.name && (
                             <motion.div
@@ -398,14 +492,14 @@ export default function Header() {
                             >
                               {/* Mobile Dropdown Header */}
                               <div className="pt-2 pb-3 space-y-2">
-                                <h4 className="font-semibold text-foreground text-sm">
+                                <h4 className="font-semibold text-white text-sm">
                                   {item.content.title}
                                 </h4>
-                                <p className="text-muted-foreground text-xs leading-relaxed">
+                                <p className="text-white/70 text-xs leading-relaxed">
                                   {item.content.description}
                                 </p>
                               </div>
-                              
+
                               {/* Mobile Dropdown Items */}
                               {item.content.items.map((subItem) => (
                                 <Link
@@ -415,43 +509,45 @@ export default function Header() {
                                     setIsMenuOpen(false);
                                     setOpenDropdown(null);
                                   }}
-                                  className="block py-3 pl-4 space-y-2 group rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300"
+                                  className="block text-white py-3 pl-4 space-y-2 group rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300"
                                 >
                                   <div className="flex items-start space-x-3">
                                     <div className="w-8 h-8 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:from-primary/20 group-hover:to-primary/30 transition-all duration-300">
-                                      <subItem.icon className="w-4 h-4 text-primary group-hover:text-primary/80 transition-colors" />
+                                      <subItem.icon className="w-4 h-4 text-white group-hover:text-primary/80 transition-colors" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                      <h5 className="font-medium text-foreground group-hover:text-primary transition-colors text-sm">
+                                      <h5 className="font-medium text-white group-hover:text-primary transition-colors text-sm">
                                         {subItem.title}
                                       </h5>
-                                      <p className="text-muted-foreground text-xs leading-relaxed mt-1">
+                                      <p className="text-white/70 text-xs leading-relaxed mt-1">
                                         {subItem.description}
                                       </p>
                                       <div className="flex flex-wrap gap-1 mt-2">
-                                        {subItem.features.slice(0, 2).map((feature) => (
-                                                                                  <span
-                                          key={feature}
-                                          className="inline-block px-2 py-1 bg-gradient-to-r from-primary/10 to-primary/20 text-primary/80 text-xs rounded-md border border-primary/10"
-                                        >
-                                            {feature}
-                                          </span>
-                                        ))}
+                                        {subItem.features
+                                          .slice(0, 2)
+                                          .map((feature) => (
+                                            <span
+                                              key={feature}
+                                              className="inline-block px-2 py-1 bg-gradient-to-r from-white/10 to-white/20 text-white/80 text-xs rounded-md border border-primary/10"
+                                            >
+                                              {feature}
+                                            </span>
+                                          ))}
                                       </div>
                                     </div>
                                   </div>
                                 </Link>
                               ))}
-                              
+
                               {/* Mobile View All Link */}
                               <div className="pt-2 pb-3 pl-4">
-                                <Link 
+                                <Link
                                   href={item.href}
                                   onClick={() => {
                                     setIsMenuOpen(false);
                                     setOpenDropdown(null);
                                   }}
-                                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm transition-colors"
+                                  className="inline-flex items-center text-white hover:text-primary/80 font-medium text-sm transition-colors"
                                 >
                                   View All {item.name}
                                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -467,8 +563,8 @@ export default function Header() {
                     onClick={() => setIsMenuOpen(false)}
                         className={`block py-3 transition-colors font-medium ${
                       isActive(item.href)
-                        ? "text-primary"
-                        : "text-foreground/80 hover:text-foreground"
+                        ? "text-white"
+                        : "text-white hover:text-white"
                     }`}
                   >
                     {item.name}
@@ -477,10 +573,10 @@ export default function Header() {
                   </div>
                 ))}
                 
-                <div className="pt-6 space-y-3 border-t border-border/30">
+                <div className="pt-6 pb-3 grid gap-3 border-t border-border/30">
                   <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                     <motion.button
-                      className="w-full px-6 py-3 text-foreground hover:text-primary transition-colors font-medium border border-border/50 rounded-lg"
+                      className="w-full px-6 py-3 mb-0 text-white hover:text-white transition-colors font-medium border border-border/50 rounded-lg"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

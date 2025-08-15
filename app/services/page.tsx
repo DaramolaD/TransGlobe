@@ -1,190 +1,152 @@
 "use client";
 
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
+  Plane, 
+  Ship, 
   Truck, 
-  Plane,
-  Ship,
   Train,
   Package,
-  ArrowRight,
   Check,
-  Globe,
+  ArrowRight,
   Clock,
-  Shield,
-  // Zap,
-  Target,
-  Users,
-  BarChart3,
   MapPin,
-  Cpu,
-  Leaf
+  Shield,
+  Zap,
+  Globe,
+  DollarSign,
+  Calculator,
+  Search,
+  Users,
+  Award
 } from "lucide-react";
 
 export default function ServicesPage() {
+  // Smooth scroll to anchor on page load if hash exists
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+          // Update URL without hash
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    }
+  }, []);
   const services = [
     {
+      id: "air-freight",
       icon: Plane,
       title: "Air Freight",
-      subtitle: "Express Worldwide Cargo",
-      description: "Fast, reliable air freight solutions for time-sensitive shipments with global coverage and real-time tracking.",
+      description: "Express worldwide air cargo services with real-time tracking and customs clearance.",
       features: [
         "24/7 Monitoring & Support",
         "Customs Clearance",
         "Real-time Tracking",
         "Insurance Coverage",
         "Express & Standard Options",
-        "Temperature Controlled"
+        "Temperature Control Available"
       ],
-      benefits: [
-        "Fastest delivery times (1-3 days)",
-        "Global network coverage",
-        "Priority handling",
-        "Flexible scheduling"
-      ],
-      useCases: [
-        "High-value electronics",
-        "Pharmaceuticals",
-        "Fashion & apparel",
-        "Automotive parts",
-        "Emergency shipments"
-      ]
+      deliveryTime: "2-5 days",
+      bestFor: "Urgent shipments, high-value items, perishable goods",
+      startingPrice: "$15/kg",
+      coverage: "Global coverage to 150+ countries"
     },
     {
+      id: "sea-freight",
       icon: Ship,
       title: "Sea Freight",
-      subtitle: "Cost-Effective Ocean Solutions",
-      description: "Efficient ocean freight services for large shipments and bulk cargo with comprehensive logistics support.",
+      description: "Cost-effective ocean freight solutions for large shipments and bulk cargo.",
       features: [
         "FCL & LCL Options",
         "Bulk Cargo Handling",
-        "Global Port Network",
         "Warehousing Services",
-        "Customs Documentation",
-        "Cargo Insurance"
+        "Port-to-Port & Door-to-Door",
+        "Container Tracking",
+        "Cost-effective for large volumes"
       ],
-      benefits: [
-        "Most cost-effective option",
-        "High capacity for large shipments",
-        "Eco-friendly transportation",
-        "Reliable scheduling"
-      ],
-      useCases: [
-        "Industrial machinery",
-        "Raw materials",
-        "Consumer goods",
-        "Automotive vehicles",
-        "Construction materials"
-      ]
+      deliveryTime: "15-30 days",
+      bestFor: "Large shipments, bulk cargo, non-urgent items",
+      startingPrice: "$3/kg",
+      coverage: "Major ports worldwide"
     },
     {
+      id: "road-freight",
       icon: Truck,
       title: "Road Freight",
-      subtitle: "Reliable Ground Transportation",
-      description: "Comprehensive road freight solutions with door-to-door delivery across continents and regional coverage.",
+      description: "Reliable ground transportation with door-to-door delivery across continents.",
       features: [
-        "Door-to-Door Delivery",
+        "Door-to-Door Service",
         "Flexible Route Planning",
-        "High Capacity Trucks",
-        "Regional Coverage",
+        "High Capacity Options",
+        "Regional & Cross-border",
         "Real-time GPS Tracking",
-        "Temperature Control"
+        "Multiple Vehicle Types"
       ],
-      benefits: [
-        "Flexible scheduling",
-        "Cost-effective for regional shipments",
-        "Door-to-door service",
-        "Real-time visibility"
-      ],
-      useCases: [
-        "Regional distribution",
-        "Cross-border shipping",
-        "Last-mile delivery",
-        "Heavy equipment",
-        "Perishable goods"
-      ]
+      deliveryTime: "3-7 days",
+      bestFor: "Regional shipments, cross-border trade, heavy equipment",
+      startingPrice: "$8/kg",
+      coverage: "North America, Europe, Asia"
     },
     {
+      id: "rail-freight",
       icon: Train,
       title: "Rail Freight",
-      subtitle: "Efficient Rail Solutions",
-      description: "Sustainable rail freight services for cross-continental and regional cargo transport with high capacity.",
+      description: "Efficient rail solutions for cross-continental and regional cargo transport.",
       features: [
         "High Volume Capacity",
         "Eco-friendly Transport",
-        "Reliable Scheduling",
-        "Cross-continental Routes",
-        "Bulk Cargo Handling",
-        "Cost-effective Pricing"
+        "Reliable Schedules",
+        "Cost-effective Long Distance",
+        "Bulk Cargo Specialized",
+        "Intermodal Solutions"
       ],
-      benefits: [
-        "High volume capacity",
-        "Eco-friendly option",
-        "Reliable scheduling",
-        "Cost-effective for long distances"
-      ],
-      useCases: [
-        "Bulk commodities",
-        "Industrial products",
-        "Cross-continental shipments",
-        "Heavy machinery",
-        "Raw materials"
-      ]
+      deliveryTime: "5-10 days",
+      bestFor: "Bulk cargo, long-distance shipments, eco-conscious clients",
+      startingPrice: "$5/kg",
+      coverage: "Major rail networks globally"
     }
   ];
 
   const additionalServices = [
     {
+      id: "warehousing",
       icon: Package,
       title: "Warehousing & Distribution",
-      description: "Strategic warehousing solutions with inventory management and efficient distribution networks.",
-      features: ["Inventory Management", "Order Fulfillment", "Cross-docking", "Value-added Services"]
+      description: "Strategic warehousing solutions with inventory management and order fulfillment.",
+      features: ["Strategic Locations", "Inventory Management", "Order Fulfillment", "Cross-docking"]
     },
     {
+      id: "cargo-insurance",
       icon: Shield,
+      title: "Cargo Insurance",
+      description: "Comprehensive insurance coverage for all types of cargo and shipments.",
+      features: ["All-risk Coverage", "Custom Policies", "Fast Claims Processing", "24/7 Support"]
+    },
+    {
+      id: "customs-clearance",
+      icon: Calculator,
       title: "Customs Clearance",
-      description: "Expert customs documentation and clearance services to ensure smooth international trade.",
-      features: ["Documentation", "Regulatory Compliance", "Duty Calculation", "Risk Management"]
+      description: "Expert customs clearance services to ensure smooth international shipments.",
+      features: ["Document Preparation", "Regulatory Compliance", "Duty Calculation", "Fast Processing"]
     },
     {
-      icon: Cpu,
-      title: "Technology Solutions",
-      description: "AI-powered logistics platform with real-time tracking and predictive analytics.",
-      features: ["Real-time Tracking", "Predictive Analytics", "API Integration", "Mobile Apps"]
-    },
-    {
-      icon: Leaf,
-      title: "Sustainable Logistics",
-      description: "Eco-friendly shipping options and carbon-neutral solutions for environmentally conscious businesses.",
-      features: ["Carbon Neutral", "Eco-friendly Routes", "Green Packaging", "Sustainability Reporting"]
-    }
-  ];
-
-  const industries = [
-    {
-      name: "E-commerce",
-      description: "End-to-end logistics solutions for online retailers",
-      services: ["Fulfillment", "Last-mile Delivery", "Returns Management", "Inventory Optimization"]
-    },
-    {
-      name: "Manufacturing",
-      description: "Supply chain solutions for manufacturing operations",
-      services: ["Raw Materials", "Component Shipping", "Finished Goods", "Just-in-Time Delivery"]
-    },
-    {
-      name: "Healthcare",
-      description: "Specialized logistics for medical and pharmaceutical products",
-      services: ["Temperature Control", "Regulatory Compliance", "Emergency Shipping", "Cold Chain"]
-    },
-    {
-      name: "Automotive",
-      description: "Logistics solutions for automotive industry",
-      services: ["Parts Distribution", "Vehicle Transport", "Just-in-Sequence", "Aftermarket Support"]
+      id: "real-time-tracking",
+      icon: Search,
+      title: "Real-time Tracking",
+      description: "Advanced tracking system providing complete visibility of your shipments.",
+      features: ["GPS Tracking", "Status Updates", "Mobile App", "Email Notifications"]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background scroll-smooth">
       {/* Hero Section */}
       <section className="pt-24 pb-20 bg-gradient-dark text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -200,9 +162,8 @@ export default function ServicesPage() {
             <span className="text-gradient">Services</span>
           </h1>
             <p className="text-xl text-white/90 leading-relaxed">
-              Comprehensive logistics solutions designed to meet your business needs. 
-              From air freight to sea cargo, we provide end-to-end services with 
-              cutting-edge technology and global expertise.
+              From air freight to sea cargo, we provide comprehensive logistics solutions 
+              tailored to your business needs. Discover how we can help you reach customers worldwide.
           </p>
         </motion.div>
         </div>
@@ -223,89 +184,91 @@ export default function ServicesPage() {
               <span className="text-gradient">Logistics Services</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Our comprehensive suite of logistics services covers every aspect of your supply chain, 
-              from initial planning to final delivery.
+              Our comprehensive suite of logistics services covers every aspect of global 
+              shipping, from express air freight to cost-effective sea cargo solutions.
             </p>
               </motion.div>
 
-          <div className="space-y-16">
+          <div className="space-y-12">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
+                id={service.id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-                }`}
+                className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-8 border border-border/50 hover:shadow-glow transition-all duration-300"
               >
-                <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div className="w-20 h-20 bg-gradient rounded-2xl flex items-center justify-center mb-6">
+                <div className="flex flex-wrap items-start gap-8">
+                  {/* Service Icon & Title */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <div className="w-20 h-20 bg-gradient rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-6">
                     <service.icon className="w-10 h-10 text-white" />
+                    </div>
+                    <h3 className="text-3xl font-display font-bold mb-4">{service.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
                   </div>
                   
-                  <h3 className="text-3xl font-display font-bold mb-2">{service.title}</h3>
-                  <p className="text-xl text-primary font-medium mb-4">{service.subtitle}</p>
-                  <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  {/* Service Details */}
+                  <div className="flex-1 pt-10 space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="flex items-center space-x-3">
+                        <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                        <div>
+                          <div className="font-semibold">Delivery Time</div>
+                          <div className="text-sm text-muted-foreground">{service.deliveryTime}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <DollarSign className="w-5 h-5 text-primary flex-shrink-0" />
+                        <div>
+                          <div className="font-semibold">Starting Price</div>
+                          <div className="text-sm text-muted-foreground">{service.startingPrice}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+                        <div>
+                          <div className="font-semibold">Coverage</div>
+                          <div className="text-sm text-muted-foreground">{service.coverage}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Package className="w-5 h-5 text-primary flex-shrink-0" />
                     <div>
-                      <h4 className="font-semibold mb-3 flex items-center space-x-2">
-                        <Check className="w-5 h-5 text-green-500" />
-                        <span>Key Features</span>
-                      </h4>
-                      <ul className="space-y-2">
-                        {service.features.slice(0, 3).map((feature) => (
-                          <li key={feature} className="text-sm text-muted-foreground flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
+                          <div className="font-semibold">Best For</div>
+                          <div className="text-sm text-muted-foreground">{service.bestFor}</div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold mb-3 flex items-center space-x-2">
-                        <Target className="w-5 h-5 text-blue-500" />
-                        <span>Benefits</span>
-                      </h4>
+                  </div>
+
+                  {/* Features */}
+                  <div className="flex-1 pt-10">
+                    <h4 className="font-semibold mb-4">Key Features</h4>
                       <ul className="space-y-2">
-                        {service.benefits.map((benefit) => (
-                          <li key={benefit} className="text-sm text-muted-foreground flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                            <span>{benefit}</span>
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-center space-x-2 text-sm">
+                          <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                          <span className="text-muted-foreground">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
 
+                {/* CTA Button */}
+                <div className="mt-8 pt-8 border-t border-border/50 text-center">
                   <motion.button
-                    className="px-6 py-3 bg-gradient text-white rounded-lg font-semibold shadow-glow flex items-center space-x-2"
+                    className="px-8 py-3 bg-gradient text-white rounded-lg font-semibold shadow-glow hover:shadow-glow-orange transition-all duration-300 hover:scale-105"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4" />
+                    Get Quote for {service.title}
                   </motion.button>
-                      </div>
-
-                <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-8 border border-border/50">
-                    <h4 className="font-semibold mb-4 flex items-center space-x-2">
-                      <Users className="w-5 h-5 text-primary" />
-                      <span>Ideal For</span>
-                    </h4>
-                    <div className="grid grid-cols-2 gap-3">
-                      {service.useCases.map((useCase) => (
-                        <div key={useCase} className="bg-white rounded-lg p-3 text-sm text-center border border-border/50">
-                          {useCase}
-                      </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </motion.div>
             ))}
@@ -328,8 +291,8 @@ export default function ServicesPage() {
               <span className="text-gradient">Services</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Beyond our core logistics services, we offer specialized solutions to enhance 
-              your supply chain operations and business efficiency.
+              Beyond core logistics, we offer specialized services to enhance your 
+              shipping experience and ensure complete supply chain solutions.
             </p>
           </motion.div>
 
@@ -337,39 +300,47 @@ export default function ServicesPage() {
             {additionalServices.map((service, index) => (
               <motion.div
                 key={service.title}
+                id={service.id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 border border-border/50 hover:shadow-glow hover:-translate-y-2 transition-all duration-300 group"
+                className="group"
               >
+                <div className="bg-white rounded-2xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-glow hover:-translate-y-2">
                 <div className="w-16 h-16 bg-gradient rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <service.icon className="w-8 h-8 text-white" />
                 </div>
 
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
                 
-                <p className="text-muted-foreground mb-4 leading-relaxed">
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
                   {service.description}
                 </p>
                 
-                <ul className="space-y-2">
+                  <ul className="space-y-2 mb-6">
                   {service.features.map((feature) => (
-                    <li key={feature} className="text-sm text-muted-foreground flex items-center space-x-2">
+                      <li key={feature} className="flex items-center space-x-2 text-sm text-muted-foreground">
                       <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
+                  
+                  <button className="text-primary hover:text-primary/80 font-medium flex items-center space-x-2 group-hover:translate-x-1 transition-all">
+                    <span>Learn More</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </motion.div>
             ))}
                       </div>
                     </div>
       </section>
 
-      {/* Industry Solutions */}
+      {/* Service Comparison */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
                   <motion.div
@@ -380,49 +351,72 @@ export default function ServicesPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">
-              Industry{" "}
-              <span className="text-gradient">Solutions</span>
+              Service{" "}
+              <span className="text-gradient">Comparison</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Tailored logistics solutions designed specifically for your industry&apos;s unique 
-              requirements and challenges.
+              Compare our different service options to find the perfect solution 
+              for your shipping needs and budget.
             </p>
               </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {industries.map((industry, index) => (
-              <motion.div
-                key={industry.name}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-6 border border-border/50 hover:shadow-glow hover:-translate-y-2 transition-all duration-300 group"
-              >
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                  {industry.name}
-                </h3>
-                
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {industry.description}
-                </p>
-                
-                <ul className="space-y-2">
-                  {industry.services.map((service) => (
-                    <li key={service} className="text-sm text-muted-foreground flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span>{service}</span>
-                    </li>
+          <div className="overflow-x-auto">
+            <div className="min-w-[800px]">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-border/50">
+                    <th className="text-left p-4 font-semibold">Service Type</th>
+                    <th className="text-center p-4 font-semibold">Delivery Time</th>
+                    <th className="text-center p-4 font-semibold">Starting Price</th>
+                    <th className="text-center p-4 font-semibold">Best For</th>
+                    <th className="text-center p-4 font-semibold">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {services.map((service) => (
+                    <tr key={service.title} id={`${service.id}-comparison`} className="border-b border-border/30 hover:bg-slate-50/50 transition-colors">
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="p-3 !m-0 bg-gradient rounded-lg flex items-center justify-center">
+                            <service.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="font-semibold">{service.title}</div>
+                            <div className="text-sm text-muted-foreground">{service.description}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="text-center p-4">
+                        <div className="font-semibold">{service.deliveryTime}</div>
+                      </td>
+                      <td className="text-center p-4">
+                        <div className="font-semibold text-primary">{service.startingPrice}</div>
+                      </td>
+                      <td className="text-center p-4">
+                        <div className="text-sm text-muted-foreground max-w-[200px] mx-auto">
+                          {service.bestFor}
+                        </div>
+                      </td>
+                      <td className="text-center p-4">
+                        <motion.button
+                          className="px-4 py-2 bg-gradient text-white rounded-lg text-sm font-medium shadow-glow hover:shadow-glow-orange transition-all duration-300"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          Get Quote
+                        </motion.button>
+                      </td>
+                    </tr>
                   ))}
-                </ul>
-              </motion.div>
-            ))}
+                </tbody>
+              </table>
+            </div>
           </div>
                   </div>
       </section>
 
-      {/* Technology Features */}
-      <section className="py-20 bg-gradient-dark text-white">
+      {/* Why Choose Our Services */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -432,46 +426,46 @@ export default function ServicesPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">
-              Powered by{" "}
-              <span className="text-gradient">Technology</span>
+              Why Choose Our{" "}
+              <span className="text-gradient">Services?</span>
             </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Our advanced technology platform provides real-time visibility, predictive analytics, 
-              and seamless integration with your existing systems.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              We combine decades of experience with cutting-edge technology to deliver 
+              logistics services that exceed your expectations.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: Cpu,
-                title: "AI-Powered Analytics",
-                description: "Predictive insights and optimization recommendations for your supply chain"
+                icon: Award,
+                title: "Proven Excellence",
+                description: "25+ years of delivering exceptional logistics services with a 99.8% success rate."
               },
               {
                 icon: Globe,
-                title: "Real-time Tracking",
-                description: "Live visibility into your shipments with GPS tracking and status updates"
-              },
-              {
-                icon: BarChart3,
-                title: "Performance Metrics",
-                description: "Comprehensive reporting and analytics to measure and improve performance"
-              },
-              {
-                icon: MapPin,
-                title: "Route Optimization",
-                description: "Intelligent route planning to reduce costs and improve delivery times"
-              },
-              {
-                icon: Clock,
-                title: "Predictive ETA",
-                description: "Accurate delivery time predictions using machine learning algorithms"
+                title: "Global Network",
+                description: "150+ countries served with local expertise and compliance knowledge."
               },
               {
                 icon: Shield,
-                title: "Security & Compliance",
-                description: "Advanced security measures and regulatory compliance monitoring"
+                title: "Complete Security",
+                description: "Advanced tracking, insurance coverage, and secure handling protocols."
+              },
+              {
+                icon: Zap,
+                title: "Technology First",
+                description: "AI-powered optimization, real-time tracking, and mobile-first solutions."
+              },
+              {
+                icon: Users,
+                title: "Expert Support",
+                description: "24/7 customer support with dedicated specialists for every service."
+              },
+              {
+                icon: Check,
+                title: "Quality Guaranteed",
+                description: "Comprehensive quality assurance and continuous improvement processes."
               }
             ].map((feature, index) => (
                     <motion.div
@@ -480,15 +474,17 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center group"
+                className="bg-white rounded-2xl p-8 border border-border/50 hover:shadow-glow hover:-translate-y-2 transition-all duration-300 group"
               >
-                <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="w-10 h-10 text-gradient" />
+                <div className="w-16 h-16 bg-gradient rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-8 h-8 text-white" />
                         </div>
+                
                 <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-white/80 leading-relaxed">
+                
+                <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -498,7 +494,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="py-20 bg-gradient-dark text-white">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -508,12 +504,12 @@ export default function ServicesPage() {
             className="max-w-4xl mx-auto"
           >
             <h2 className="text-4xl lg:text-6xl font-display font-bold mb-6">
-              Ready to Optimize Your{" "}
-              <span className="text-gradient">Logistics?</span>
+              Ready to Get{" "}
+              <span className="text-gradient">Started?</span>
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Let our experts analyze your current logistics operations and design a 
-              customized solution that drives efficiency and reduces costs.
+            <p className="text-xl text-white/80 mb-8 leading-relaxed">
+              Get a free quote for any of our services and discover how SwiftCargo 
+              can transform your logistics operations.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -522,16 +518,16 @@ export default function ServicesPage() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span>Get Custom Quote</span>
+                <span>Get Free Quote</span>
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
               
               <motion.button
-                className="px-8 py-4 border-2 border-primary/30 text-primary rounded-lg font-semibold text-lg bg-white hover:bg-primary hover:text-white transition-all"
+                className="px-8 py-4 border-2 border-white/30 text-white rounded-lg font-semibold text-lg backdrop-blur-custom hover:bg-white/10 transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Schedule Consultation
+                Speak to Expert
               </motion.button>
                 </div>
               </motion.div>
