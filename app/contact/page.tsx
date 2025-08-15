@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { 
   Mail, 
   Phone, 
-  MapPin, 
-  Clock, 
+  MapPin,
   MessageSquare,
   Send,
   CheckCircle,
@@ -146,7 +145,7 @@ export default function ContactPage() {
           </h1>
 
           <p className="text-xl text-muted-foreground mb-8">
-            Thank you for contacting SwiftCargo. We've received your message and
+            Thank you for contacting SwiftCargo. We&apos;ve received your message and
             will get back to you within 2 hours during business hours.
           </p>
 
@@ -166,7 +165,7 @@ export default function ContactPage() {
                   <span className="text-white text-sm font-bold">2</span>
                 </div>
                 <span className="text-muted-foreground">
-                  We'll assign the best specialist to help you
+                  We&apos;ll assign the best specialist to help you
                 </span>
               </div>
               <div className="flex items-center space-x-3">
@@ -174,7 +173,7 @@ export default function ContactPage() {
                   <span className="text-white text-sm font-bold">3</span>
                 </div>
                 <span className="text-muted-foreground">
-                  You'll receive a detailed response within 2 hours
+                  You&apos;ll receive a detailed response within 2 hours
                 </span>
               </div>
             </div>
@@ -568,7 +567,7 @@ export default function ContactPage() {
               Ready to Get <span className="text-gradient">Started?</span>
             </h2>
             <p className="text-xl text-white/80 mb-8 leading-relaxed">
-              Don't wait to optimize your logistics. Contact us today and
+              Don&apos;t wait to optimize your logistics. Contact us today and
               discover how SwiftCargo can transform your shipping operations.
             </p>
             
