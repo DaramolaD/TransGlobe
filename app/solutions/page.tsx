@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   // Building2, 
@@ -18,8 +19,26 @@ import {
 } from "lucide-react";
 
 export default function SolutionsPage() {
+  // Smooth scroll to anchor on page load if hash exists
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+          // Update URL without hash
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    }
+  }, []);
+
   const industrySolutions = [
     {
+      id: "ecommerce-retail",
       icon: ShoppingCart,
       title: "E-commerce & Retail",
       description: "End-to-end logistics solutions for online retailers and brick-and-mortar stores",
@@ -43,6 +62,7 @@ export default function SolutionsPage() {
       ]
     },
     {
+      id: "manufacturing",
       icon: Factory,
       title: "Manufacturing",
       description: "Supply chain solutions for manufacturing operations and industrial production",
@@ -66,6 +86,7 @@ export default function SolutionsPage() {
       ]
     },
     {
+      id: "automotive",
       icon: Car,
       title: "Automotive",
       description: "Specialized logistics for automotive industry and vehicle manufacturing",
@@ -89,6 +110,7 @@ export default function SolutionsPage() {
       ]
     },
     {
+      id: "healthcare-pharma",
       icon: Heart,
       title: "Healthcare & Pharma",
       description: "Temperature-controlled logistics for medical and pharmaceutical products",
@@ -115,24 +137,28 @@ export default function SolutionsPage() {
 
   const technologySolutions = [
     {
+      id: "ai-analytics",
       icon: Zap,
       title: "AI-Powered Analytics",
       description: "Machine learning algorithms that predict demand, optimize routes, and identify cost-saving opportunities",
       features: ["Predictive analytics", "Route optimization", "Cost analysis", "Performance insights"]
     },
     {
+      id: "real-time-tracking",
       icon: Globe,
       title: "Real-time Tracking",
       description: "Live visibility into your shipments with GPS tracking and status updates",
       features: ["GPS tracking", "Status updates", "ETA predictions", "Exception alerts"]
     },
     {
+      id: "security-compliance",
       icon: Shield,
       title: "Security & Compliance",
       description: "Advanced security measures and regulatory compliance monitoring",
       features: ["Cargo insurance", "Regulatory compliance", "Security protocols", "Risk management"]
     },
     {
+      id: "predictive-eta",
       icon: Clock,
       title: "Predictive ETA",
       description: "Accurate delivery time predictions using machine learning algorithms",
@@ -142,6 +168,7 @@ export default function SolutionsPage() {
 
   const caseStudies = [
     {
+      id: "techcorp-electronics",
       company: "TechCorp Electronics",
       industry: "Electronics Manufacturing",
       challenge: "Managing complex supply chains across 15 countries with varying customs regulations",
@@ -153,6 +180,7 @@ export default function SolutionsPage() {
       ]
     },
     {
+      id: "global-fashion-retail",
       company: "Global Fashion Retail",
       industry: "Fashion & Apparel",
       challenge: "Meeting same-day delivery expectations while managing seasonal inventory fluctuations",
@@ -164,6 +192,7 @@ export default function SolutionsPage() {
       ]
     },
     {
+      id: "pharmacare-solutions",
       company: "PharmaCare Solutions",
       industry: "Pharmaceuticals",
       challenge: "Maintaining temperature-controlled logistics for sensitive medical products",
@@ -177,7 +206,7 @@ export default function SolutionsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background scroll-smooth">
       {/* Hero Section */}
       <section className="pt-24 pb-20 bg-gradient-dark text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -224,6 +253,7 @@ export default function SolutionsPage() {
             {industrySolutions.map((solution, index) => (
               <motion.div
                 key={solution.title}
+                id={solution.id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -340,6 +370,7 @@ export default function SolutionsPage() {
             {technologySolutions.map((solution, index) => (
               <motion.div
                 key={solution.title}
+                id={solution.id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -396,6 +427,7 @@ export default function SolutionsPage() {
             {caseStudies.map((study, index) => (
               <motion.div
                 key={study.company}
+                id={study.id}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

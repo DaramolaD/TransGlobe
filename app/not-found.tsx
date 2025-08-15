@@ -15,7 +15,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto px-4 py-20 text-center">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
