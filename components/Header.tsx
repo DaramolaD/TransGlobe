@@ -35,8 +35,29 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { IconTile, iconToneAt } from "@/components/IconTile";
+import { BrandMark } from "@/components/branding/BrandMark";
+import type { SiteBrand } from "@/lib/branding/types";
+import { cn } from "@/lib/utils";
 
-export default function Header() {
+const navItemClass = (
+  active: boolean,
+  open?: boolean,
+  opts?: { block?: boolean }
+) =>
+  cn(
+    "nav-link text-sm rounded-lg",
+    opts?.block
+      ? "flex w-full py-3 px-3"
+      : "inline-flex items-center h-9 px-4",
+    "hover:!bg-[var(--nav-hover)] hover:!text-graphite-dark focus:!bg-[var(--nav-hover)] focus:!text-graphite-dark data-[state=open]:!bg-[var(--nav-open)] data-[state=open]:!text-graphite-dark",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-graphite-mid/25 focus-visible:ring-offset-2",
+    active && "nav-link-active",
+    !active && open && "nav-link-open"
+  );
+
+export default function Header({ brand }: { brand?: SiteBrand }) {
+  const brandName = brand?.name ?? "SwiftCargo";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
@@ -297,112 +318,118 @@ export default function Header() {
     setOpenDropdown(openDropdown === name ? null : name);
   };
 
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+    setOpenDropdown(null);
+  };
+
   return (
-    <header className="fixed top-0 w-full z-50 bg-slate-900 backdrop-blur-xl border-b border-black/20 shadow-lg">
-      <div className="container mx-auto px-4 py-4">
+    <>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.button
+            type="button"
+            key="mobile-nav-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeMobileMenu}
+            aria-label="Close menu"
+            className="fixed inset-0 z-40 xl:hidden bg-graphite-dark/20 backdrop-blur-[6px] supports-[backdrop-filter]:bg-white/35"
+          />
+        )}
+      </AnimatePresence>
+
+    <header className="fixed top-0 w-full z-50 nav-shell backdrop-blur-md supports-[backdrop-filter]:bg-white/90">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/">
-            <motion.div 
-              className="flex items-center space-x-2 cursor-pointer"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="w-10 h-10 bg-gradient rounded-lg flex items-center justify-center">
-                <Package className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-display font-bold text-gradient">
-                SwiftCargo
-              </span>
-            </motion.div>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <BrandMark
+              name={brandName}
+              logoUrl={brand?.logoUrl}
+              textClassName="text-xl text-graphite-dark"
+            />
+          </motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden xl:flex items-center">
-            <NavigationMenu>
-              <NavigationMenuList className="space-x-1">
-            {navigation.map((item) => (
+            <NavigationMenu className="nav-menu max-w-none">
+              <NavigationMenuList className="gap-0.5">
+                {navigation.map((item) => {
+                  const active = isActive(item.href);
+                  return (
                   <NavigationMenuItem key={item.name}>
                     {item.dropdown ? (
-                      <NavigationMenuTrigger className="bg-transparent hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 data-[state=open]:bg-gradient-to-r data-[state=open]:from-primary/10 data-[state=open]:to-primary/5 border-none shadow-none px-4 py-2 h-auto text-white hover:text-foreground data-[state=open]:text-foreground rounded-lg transition-all duration-300 hover:scale-105">
+                      <NavigationMenuTrigger
+                        className={cn(
+                          navItemClass(active),
+                          "border-0 gap-1"
+                        )}
+                      >
                         {item.name}
                       </NavigationMenuTrigger>
                     ) : (
                       <NavigationMenuLink asChild>
-              <Link
-                href={item.href}
-                          className={`block px-4 py-2 text-white hover:text-foreground transition-all duration-300 font-medium rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 hover:scale-105 ${
-                  isActive(item.href)
-                              ? "text-primary bg-gradient-to-r from-primary/10 to-primary/5"
-                              : ""
-                }`}
-              >
-                {item.name}
-              </Link>
+                        <Link
+                          href={item.href}
+                          className={navItemClass(active)}
+                          aria-current={active ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
                       </NavigationMenuLink>
                     )}
 
                     {item.dropdown && (
                       <NavigationMenuContent>
-                        <div className="w-[900px] p-8 bg-white/20 backdrop-blur-2xl border border-white/30 shadow-2xl rounded-2xl">
+                        <div className="w-[900px] p-8 bg-white border border-platinum-light shadow-[0_16px_48px_rgba(10,14,20,0.12)] rounded-2xl">
                           <div className="grid grid-cols-3 gap-10">
-                            {/* Left Column - Title and Description */}
                             <div className="col-span-1 space-y-6">
-                              <div className="space-y-4">
-                                <h3 className="text-3xl font-bold text-foreground leading-tight">
+                              <div className="space-y-3">
+                                <p className="type-eyebrow text-platinum-dark">
+                                  {item.name}
+                                </p>
+                                <h3 className="text-2xl font-bold text-graphite-dark leading-tight">
                                   {item.content.title}
                                 </h3>
-                                <p className="text-muted-foreground text-base leading-relaxed">
+                                <p className="text-platinum-dark text-sm leading-relaxed">
                                   {item.content.description}
                                 </p>
                               </div>
-                              <div className="pt-4">
-                                <Link
-                                  href={item.href}
-                                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm transition-colors group"
-                                >
-                                  <span className="mr-2">
-                                    View All {item.name}
-                                  </span>
-                                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                              </div>
+                              <Link
+                                href={item.href}
+                                className="type-link inline-flex items-center gap-2 group"
+                              >
+                                View all {item.name}
+                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                              </Link>
                             </div>
 
-                            {/* Right Column - Service Items */}
-                            <div className="col-span-2 grid grid-cols-2 gap-6">
-                              {item.content.items.map((subItem) => (
+                            <div className="col-span-2 grid grid-cols-2 gap-4">
+                              {item.content.items.map((subItem, subIndex) => (
                                 <NavigationMenuLink asChild key={subItem.title}>
                                   <Link
                                     href={subItem.href}
-                                    className="group p-6 rounded-xl bg-gradient-to-br from-white/50 to-white/20 hover:from-white/80 hover:to-white/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-white/30 hover:border-primary/20 backdrop-blur-sm"
+                                    className="group block p-5 rounded-xl border border-platinum-light bg-platinum-off/60 hover:bg-[var(--nav-hover)] hover:!text-graphite-dark hover:border-graphite-mid/15 transition-colors no-underline"
                                   >
-                                    <div className="space-y-4">
-                                      <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/20 rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/30 transition-all duration-300 group-hover:scale-110">
-                                        <subItem.icon className="w-6 h-6 text-primary group-hover:text-primary/80 transition-colors" />
-                                      </div>
-                                      <div className="space-y-3">
-                                        <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors text-base">
-                                          {subItem.title}
-                                        </h4>
-                                        <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/80 transition-colors">
-                                          {subItem.description}
-                                        </p>
-                                        <div className="flex flex-wrap gap-2">
-                                          {subItem.features
-                                            .slice(0, 2)
-                                            .map((feature) => (
-                                              <span
-                                                key={feature}
-                                                className="inline-block px-3 py-1.5 bg-gradient-to-r from-primary/10 to-primary/20 text-primary/80 group-hover:from-primary/20 group-hover:to-primary/30 group-hover:text-primary transition-all duration-300 text-xs rounded-lg font-medium border border-primary/10 group-hover:border-primary/20"
-                                              >
-                                                {feature}
-                                              </span>
-                                            ))}
-                                        </div>
-                                      </div>
-                                    </div>
+                                    <IconTile
+                                      icon={subItem.icon}
+                                      tone={iconToneAt(subIndex)}
+                                      size="sm"
+                                      className="mb-4"
+                                    />
+                                    <h4 className="font-semibold text-graphite-dark text-sm mb-1.5">
+                                      {subItem.title}
+                                    </h4>
+                                    <p className="text-platinum-dark text-xs leading-relaxed line-clamp-2">
+                                      {subItem.description}
+                                    </p>
                                   </Link>
                                 </NavigationMenuLink>
                               ))}
@@ -412,44 +439,48 @@ export default function Header() {
                       </NavigationMenuContent>
                     )}
                   </NavigationMenuItem>
-                ))}
+                  );
+                })}
               </NavigationMenuList>
             </NavigationMenu>
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden xl:flex items-center space-x-4">
-            <Link href="/contact">
-              <motion.button
-                className="px-6 py-2 text-white hover:text-white transition-colors font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Us
-              </motion.button>
+          <div className="hidden xl:flex items-center gap-3">
+            <Link href="/login">
+              <span className="nav-link inline-flex px-4 py-2 text-sm">
+                Sign in
+              </span>
             </Link>
             <Link href="/contact">
-              <motion.button
-                className="px-6 py-2 bg-gradient text-white rounded-lg font-medium shadow-glow"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+              <span className="nav-link inline-flex px-4 py-2 text-sm">
+                Contact
+              </span>
+            </Link>
+            <Link href="/contact">
+              <motion.span
+                className="btn-cta btn-cta-sm !py-2 !px-5 inline-flex"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.99 }}
               >
                 Get Quote
-              </motion.button>
+              </motion.span>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <motion.button
             className="xl:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => (isMenuOpen ? closeMobileMenu() : setIsMenuOpen(true))}
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             {isMenuOpen ? (
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6 text-graphite-dark" />
             ) : (
-              <Menu className="w-6 h-6 text-white" />
+              <Menu className="w-6 h-6 text-graphite-dark" />
             )}
           </motion.button>
         </div>
@@ -462,7 +493,7 @@ export default function Header() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="xl:hidden mt-4 pt-4 border-t border-border/50"
+              className="xl:hidden mt-4 pt-4 border-t border-platinum-light bg-white rounded-xl"
             >
               <div className="space-y-4">
                 {navigation.map((item) => (
@@ -470,8 +501,16 @@ export default function Header() {
                     {item.dropdown ? (
                       <div className="space-y-3">
                         <button
+                          type="button"
                           onClick={() => toggleDropdown(item.name)}
-                          className="flex items-center justify-between w-full py-3 px-3 font-medium text-white hover:text-white hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300 rounded-lg"
+                          className={cn(
+                            "flex items-center justify-between w-full py-3 px-3 rounded-lg",
+                            navItemClass(
+                              isActive(item.href),
+                              openDropdown === item.name,
+                              { block: true }
+                            )
+                          )}
                         >
                           <span>{item.name}</span>
                           <ChevronDown
@@ -488,69 +527,49 @@ export default function Header() {
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.2 }}
-                              className="pl-4 space-y-3 border-l border-border/30"
+                              className="pl-4 space-y-2 border-l border-platinum-light"
                             >
-                              {/* Mobile Dropdown Header */}
-                              <div className="pt-2 pb-3 space-y-2">
-                                <h4 className="font-semibold text-white text-sm">
+                              <div className="pt-2 pb-2 space-y-1">
+                                <h4 className="font-semibold text-graphite-dark text-sm">
                                   {item.content.title}
                                 </h4>
-                                <p className="text-white/70 text-xs leading-relaxed">
+                                <p className="text-platinum-dark text-xs leading-relaxed">
                                   {item.content.description}
                                 </p>
                               </div>
 
-                              {/* Mobile Dropdown Items */}
-                              {item.content.items.map((subItem) => (
+                              {item.content.items.map((subItem, subIndex) => (
                                 <Link
                                   key={subItem.title}
                                   href={subItem.href}
-                                  onClick={() => {
-                                    setIsMenuOpen(false);
-                                    setOpenDropdown(null);
-                                  }}
-                                  className="block text-white py-3 pl-4 space-y-2 group rounded-lg hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary/5 transition-all duration-300"
+                                  onClick={closeMobileMenu}
+                                  className="flex items-start gap-3 py-2.5 pl-2 rounded-lg nav-link"
                                 >
-                                  <div className="flex items-start space-x-3">
-                                    <div className="w-8 h-8 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:from-primary/20 group-hover:to-primary/30 transition-all duration-300">
-                                      <subItem.icon className="w-4 h-4 text-white group-hover:text-primary/80 transition-colors" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <h5 className="font-medium text-white group-hover:text-primary transition-colors text-sm">
-                                        {subItem.title}
-                                      </h5>
-                                      <p className="text-white/70 text-xs leading-relaxed mt-1">
-                                        {subItem.description}
-                                      </p>
-                                      <div className="flex flex-wrap gap-1 mt-2">
-                                        {subItem.features
-                                          .slice(0, 2)
-                                          .map((feature) => (
-                                            <span
-                                              key={feature}
-                                              className="inline-block px-2 py-1 bg-gradient-to-r from-white/10 to-white/20 text-white/80 text-xs rounded-md border border-primary/10"
-                                            >
-                                              {feature}
-                                            </span>
-                                          ))}
-                                      </div>
-                                    </div>
+                                  <IconTile
+                                    icon={subItem.icon}
+                                    tone={iconToneAt(subIndex)}
+                                    size="sm"
+                                    className="!w-9 !h-9 shrink-0"
+                                  />
+                                  <div className="min-w-0">
+                                    <h5 className="font-medium text-graphite-dark text-sm">
+                                      {subItem.title}
+                                    </h5>
+                                    <p className="text-platinum-dark text-xs leading-relaxed mt-0.5 line-clamp-2">
+                                      {subItem.description}
+                                    </p>
                                   </div>
                                 </Link>
                               ))}
 
-                              {/* Mobile View All Link */}
-                              <div className="pt-2 pb-3 pl-4">
+                              <div className="pt-2 pb-2 pl-2">
                                 <Link
                                   href={item.href}
-                                  onClick={() => {
-                                    setIsMenuOpen(false);
-                                    setOpenDropdown(null);
-                                  }}
-                                  className="inline-flex items-center text-white hover:text-primary/80 font-medium text-sm transition-colors"
+                                  onClick={closeMobileMenu}
+                                  className="type-link inline-flex items-center gap-2 text-sm"
                                 >
-                                  View All {item.name}
-                                  <ArrowRight className="w-4 h-4 ml-2" />
+                                  View all {item.name}
+                                  <ArrowRight className="w-4 h-4" />
                                 </Link>
                               </div>
                             </motion.div>
@@ -558,40 +577,40 @@ export default function Header() {
                         </AnimatePresence>
                       </div>
                     ) : (
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                        className={`block py-3 transition-colors font-medium ${
-                      isActive(item.href)
-                        ? "text-white"
-                        : "text-white hover:text-white"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
+                      <Link
+                        href={item.href}
+                        onClick={closeMobileMenu}
+                        className={navItemClass(isActive(item.href), false, {
+                          block: true,
+                        })}
+                        aria-current={isActive(item.href) ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Link>
                     )}
                   </div>
                 ))}
                 
-                <div className="pt-6 pb-3 grid gap-3 border-t border-border/30">
-                  <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-                    <motion.button
-                      className="w-full px-6 py-3 mb-0 text-white hover:text-white transition-colors font-medium border border-border/50 rounded-lg"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Contact Us
-                    </motion.button>
+                <div className="pt-4 pb-2 grid gap-2 border-t border-platinum-light">
+                  <Link
+                    href="/login"
+                    onClick={closeMobileMenu}
+                    className="btn-secondary w-full text-center !py-2.5"
+                  >
+                    Sign in
                   </Link>
-                  <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-                    <motion.button
-                      className="w-full px-6 py-3 bg-gradient text-white rounded-lg font-medium shadow-glow flex items-center justify-center space-x-2"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <span>Get Quote</span>
+                  <Link
+                    href="/contact"
+                    onClick={closeMobileMenu}
+                    className="btn-secondary w-full text-center !py-2.5"
+                  >
+                    Contact
+                  </Link>
+                  <Link href="/contact" onClick={closeMobileMenu}>
+                    <span className="btn-cta btn-cta-sm w-full inline-flex justify-center gap-2">
+                      Get Quote
                       <ArrowRight className="w-4 h-4" />
-                    </motion.button>
+                    </span>
                   </Link>
                 </div>
               </div>
@@ -600,5 +619,6 @@ export default function Header() {
         </AnimatePresence>
       </div>
     </header>
+    </>
   );
 }

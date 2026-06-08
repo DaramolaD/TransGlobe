@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TransGlobe — Logistics Platform
 
-## Getting Started
+Full-stack logistics platform: public website, customer portal, admin operations, driver app, live tracking, billing, and CMS.
 
-First, run the development server:
+## Quick start (developer)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Copy `.env.example` → `.env.local` and add your Supabase keys.
+2. Run migrations in `supabase/migrations/` (Supabase CLI or dashboard).
+3. `npm install` then `npm run dev` → [http://localhost:3000](http://localhost:3000)
+4. Create a superadmin user in Supabase Auth and set `profiles.role = 'superadmin'`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Client handover
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Give your client **`CLIENT_SETUP.md`** — it explains how to brand the company, configure services, invite staff, and run daily operations **without SQL**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+After first login, the client should:
 
-## Learn More
+1. Open **Superadmin → Settings** and set company name, support email/phone, and toggles.
+2. Configure **Pricing** (service types + rate cards).
+3. Add **Facility locations** for map tracking.
+4. Invite team members under **Team**.
 
-To learn more about Next.js, take a look at the following resources:
+Branding from Platform settings updates the website header/footer, login, dashboards, invoices, portal support, and contact page automatically.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Audience | URL |
+|----------|-----|
+| Public site | `/` |
+| Tracking | `/tracking` |
+| Login / portal | `/login` → `/app/portal` |
+| Admin ops | `/app/admin` |
+| Superadmin | `/app/superadmin` |
+| Driver | `/app/driver` |
 
-## Deploy on Vercel
+## Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 15 (App Router)
+- Supabase (Auth, Postgres, Realtime)
+- MapLibre / optional Mapbox for live maps

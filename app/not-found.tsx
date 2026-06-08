@@ -29,10 +29,10 @@ export default function NotFound() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="w-16 h-16 bg-gradient rounded-2xl flex items-center justify-center">
+            <div className="w-16 h-16 icon-tile rounded-2xl flex items-center justify-center">
               <Package className="w-8 h-8 text-white" />
             </div>
-            <span className="text-4xl font-display font-bold text-gradient">SwiftCargo</span>
+            <span className="text-4xl font-display font-bold text-graphite-dark">SwiftCargo</span>
           </motion.div>
 
           {/* 404 Content */}
@@ -42,12 +42,12 @@ export default function NotFound() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mb-12"
           >
-            <h1 className="text-8xl lg:text-9xl font-display font-bold text-gradient mb-6">
+            <h1 className="text-8xl lg:text-9xl font-display font-bold text-graphite-dark mb-6">
               404
             </h1>
             <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">
               Page Not{" "}
-              <span className="text-gradient">Found</span>
+              Found
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Oops! It looks like this logistics route has been diverted. The page you&apos;re looking for 
@@ -75,7 +75,7 @@ export default function NotFound() {
             
             <motion.button
               onClick={() => window.history.back()}
-              className="px-8 py-4 border-2 border-primary/30 text-primary rounded-lg font-semibold text-lg bg-white hover:bg-primary hover:text-white transition-all flex items-center justify-center space-x-2"
+              className="px-8 py-4 border-2 border-graphite-mid/30 text-graphite-dark rounded-lg font-semibold text-lg bg-white hover:bg-graphite-mid hover:text-white transition-all flex items-center justify-center space-x-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -93,7 +93,7 @@ export default function NotFound() {
           >
             <h3 className="text-2xl font-display font-bold mb-6">
               Popular{" "}
-              <span className="text-gradient">Destinations</span>
+              Destinations
             </h3>
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
@@ -109,11 +109,11 @@ export default function NotFound() {
                   className="group"
                 >
                   <Link href={link.href}>
-                    <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-6 border border-border/50 hover:shadow-glow hover:-translate-y-2 transition-all duration-300 group-hover:border-primary/30">
-                      <div className="w-16 h-16 bg-gradient rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="bg-platinum-off rounded-2xl p-6 border border-border/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group-hover:border-graphite-mid/30">
+                      <div className="w-16 h-16 icon-tile rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300">
                         <link.icon className="w-8 h-8 text-white" />
                       </div>
-                      <h4 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                      <h4 className="text-xl font-semibold mb-2 group-hover:text-graphite-dark transition-colors">
                         {link.title}
                       </h4>
                       <p className="text-muted-foreground text-sm">
@@ -141,7 +141,7 @@ export default function NotFound() {
               <input
                 type="text"
                 placeholder="Search our website..."
-                className="w-full pl-10 pr-4 py-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-3 border border-border/50 rounded-lg focus:ring-2 focus:ring-ember-main focus:border-transparent transition-all"
               />
             </div>
             <p className="text-sm text-muted-foreground mt-2">
