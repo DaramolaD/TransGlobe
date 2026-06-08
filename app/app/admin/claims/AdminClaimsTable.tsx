@@ -1,20 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FilterableDataTable } from "@/components/dashboard/FilterableDataTable";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { TrackingId } from "@/components/dashboard/TrackingId";
 import { Badge } from "@/components/ui/badge";
 import { claimDetailRow } from "@/lib/dashboard/table-details";
 import { TableTextCell } from "@/components/dashboard/TableCells";
-import { markClaimViewed } from "@/lib/actions/claims";
 import { displayName, type ClaimWithRelations } from "@/lib/data/entity-relations";
 import { ClaimRowMenu } from "./ClaimRowMenu";
-import type { DataTableRow } from "@/components/dashboard/DataTable";
 
 export function AdminClaimsTable({ claims }: { claims: ClaimWithRelations[] }) {
-  const router = useRouter();
-
   const rows = claims.map((c) => ({
     _id: c.id,
     _detail: claimDetailRow({
@@ -29,6 +24,7 @@ export function AdminClaimsTable({ claims }: { claims: ClaimWithRelations[] }) {
       route: c.shipment
         ? `${c.shipment.origin} → ${c.shipment.destination}`
         : undefined,
+      staffViewedAt: c.staff_viewed_at,
     }),
     _searchText: [
       c.claim_type,
@@ -79,14 +75,6 @@ export function AdminClaimsTable({ claims }: { claims: ClaimWithRelations[] }) {
     menu: <ClaimRowMenu id={c.id} currentStatus={c.status} />,
   }));
 
-  async function handleRowClick(row: DataTableRow) {
-    const id = row._id;
-    if (typeof id === "string") {
-      await markClaimViewed(id);
-      router.refresh();
-    }
-  }
-
   return (
     <FilterableDataTable
       storageKey="admin-claims-columns"
@@ -105,7 +93,6 @@ export function AdminClaimsTable({ claims }: { claims: ClaimWithRelations[] }) {
       rows={rows}
       getSearchText={(row) => String(row._searchText ?? "")}
       emptyMessage="No claims filed yet."
-      onRowClick={handleRowClick}
     />
   );
 }

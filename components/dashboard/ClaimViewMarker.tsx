@@ -10,9 +10,14 @@ export function ClaimViewMarker({ claimId }: { claimId: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    markClaimViewed(claimId).then(() => {
-      if (!cancelled) router.refresh();
-    });
+    void markClaimViewed(claimId)
+      .then((result) => {
+        if (cancelled || result?.success !== true) return;
+        router.refresh();
+      })
+      .catch(() => {
+        /* Avoid unhandled rejection overlay in dev when the action fails */
+      });
     return () => {
       cancelled = true;
     };

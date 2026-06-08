@@ -37,8 +37,8 @@ export function getIntegrationEnvStatus(): IntegrationEnvStatus[] {
       key: "mapbox",
       label: "Mapbox",
       description: "Live driver map, facility waypoints, and public tracking map",
-      configured: Boolean(process.env.NEXT_PUBLIC_MAPBOX_TOKEN),
-      envVar: "NEXT_PUBLIC_MAPBOX_TOKEN",
+      configured: Boolean(process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN),
+      envVar: "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN",
       required: false,
     },
     {

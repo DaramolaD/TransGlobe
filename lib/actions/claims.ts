@@ -209,7 +209,7 @@ export async function markClaimViewed(id: string) {
   const supabase = await createClient();
   const now = new Date().toISOString();
 
-  await supabase
+  const { error } = await supabase
     .from("claims")
     .update({
       staff_viewed_at: now,
@@ -217,6 +217,12 @@ export async function markClaimViewed(id: string) {
     })
     .eq("id", id)
     .is("staff_viewed_at", null);
+
+  if (error) {
+    // Background bookkeeping — log for ops/dev, don't surface migration jargon in the UI
+    console.error("[markClaimViewed]", error.message);
+    return { success: false as const };
+  }
 
   await markClaimNotificationsRead(id);
 

@@ -18,6 +18,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { signIn, signUp } from "@/lib/actions/auth";
+import { rethrowNavigationError } from "@/lib/errors/navigation";
 import { toast } from "sonner";
 
 function LoginFormInner() {
@@ -36,7 +37,8 @@ function LoginFormInner() {
     try {
       const result = await signIn(email, password);
       if (result?.error) toast.error(result.error);
-    } catch {
+    } catch (err) {
+      rethrowNavigationError(err);
       toast.error("Unable to reach the authentication server. Try again shortly.");
     } finally {
       setLoading(false);
@@ -51,7 +53,8 @@ function LoginFormInner() {
       const result = await signUp(email, password, fullName);
       if (result?.error) toast.error(result.error);
       else if (result?.success) toast.success(result.message);
-    } catch {
+    } catch (err) {
+      rethrowNavigationError(err);
       toast.error("Unable to reach the authentication server. Try again shortly.");
     } finally {
       setLoading(false);

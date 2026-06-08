@@ -242,12 +242,31 @@ export function claimDetailRow(c: {
   customerName?: string | null;
   shipmentId?: string;
   route?: string;
+  staffViewedAt?: string | null;
 }): DataTableDetail {
+  const claimType = c.claim_type.replace(/_/g, " ");
+  const title =
+    claimType.charAt(0).toUpperCase() + claimType.slice(1) + " claim";
+
   return {
     kind: "claim",
-    title: c.claim_type.replace(/_/g, " "),
+    title,
     subtitle: c.tracking_number ?? "No shipment linked",
     fields: [
+      {
+        label: "Review",
+        value: c.staffViewedAt ? (
+          <span className="text-muted-foreground">
+            Viewed{" "}
+            {new Date(c.staffViewedAt).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
+        ) : (
+          <span className="font-medium text-primary">New — not yet opened</span>
+        ),
+      },
       {
         label: "Claim ID",
         value: (
@@ -256,7 +275,7 @@ export function claimDetailRow(c: {
           </span>
         ),
       },
-      { label: "Type", value: c.claim_type.replace(/_/g, " ") },
+      { label: "Type", value: claimType },
       { label: "Status", value: <StatusBadge status={c.status} /> },
       ...(c.customerName
         ? [{ label: "Customer", value: c.customerName }]
@@ -274,7 +293,7 @@ export function claimDetailRow(c: {
       { label: "Filed", value: formatTableDate(c.created_at) },
     ],
     href: `/app/admin/claims/${c.id}`,
-    hrefLabel: "View claim details",
+    hrefLabel: "Open claim",
   };
 }
 
