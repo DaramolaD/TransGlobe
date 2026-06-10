@@ -29,6 +29,7 @@ export type InvoiceShipmentDetails = {
   packages: InvoicePackageDisplay[];
   goodsDescription?: string | null;
   referenceNumber?: string | null;
+  hsCode?: string | null;
   hasStructuredData: boolean;
   legacyOrigin?: string;
   legacyDestination?: string;
@@ -85,6 +86,7 @@ function parseMetadata(metadata: unknown): {
   packages?: BookingPackage[];
   goodsDescription?: string | null;
   referenceNumber?: string | null;
+  hsCode?: string | null;
 } | null {
   if (!metadata || typeof metadata !== "object") return null;
   const m = metadata as Record<string, unknown>;
@@ -94,6 +96,7 @@ function parseMetadata(metadata: unknown): {
     packages: m.packages as BookingPackage[] | undefined,
     goodsDescription: (m.goodsDescription as string) ?? null,
     referenceNumber: (m.referenceNumber as string) ?? null,
+    hsCode: (m.hsCode as string) ?? null,
   };
 }
 
@@ -162,6 +165,7 @@ export function buildInvoiceShipmentDetails(
     packages,
     goodsDescription: meta?.goodsDescription ?? shipment.special_instructions ?? null,
     referenceNumber: meta?.referenceNumber ?? null,
+    hsCode: meta?.hsCode ?? null,
     hasStructuredData: Boolean(shipper && recipient),
     legacyOrigin: shipment.origin,
     legacyDestination: shipment.destination,

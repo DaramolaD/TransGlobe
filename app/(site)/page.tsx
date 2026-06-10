@@ -113,7 +113,7 @@ export default function Home() {
                 </motion.button>
               </div>
 
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-lg">
+              {/* <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-lg">
                 {[
                   { number: "25+", label: "Years" },
                   { number: "150+", label: "Countries" },
@@ -128,7 +128,7 @@ export default function Home() {
                     <StatDisplay value={stat.number} label={stat.label} variant="dark" />
                   </motion.div>
                 ))}
-              </div>
+              </div> */}
             </motion.div>
 
             <motion.div

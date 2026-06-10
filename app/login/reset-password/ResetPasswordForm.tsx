@@ -116,9 +116,8 @@ export function ResetPasswordForm() {
               This reset link is invalid or has expired.
             </p>
             <p className="text-muted-foreground">
-              Request a new link from the forgot password page. Make sure your Supabase
-              redirect URL includes{" "}
-              <code className="text-xs bg-muted px-1 rounded">/auth/callback</code>.
+              Request a new link from the forgot password page. Links expire after a
+              short time — open the email on the same device or browser if possible.
             </p>
             <Button variant="outline" className="w-full" asChild>
               <Link href="/login/forgot-password">Request new link</Link>

@@ -62,12 +62,12 @@ type BookableService = {
 };
 
 const FALLBACK_BOOK_SERVICES: BookableService[] = [
-  { slug: "air", label: "Air freight", delivery_hint: "2–5 business days" },
-  { slug: "sea", label: "Ocean freight", delivery_hint: "15–30 days" },
-  { slug: "road", label: "Road freight", delivery_hint: "3–7 days" },
-  { slug: "rail", label: "Rail freight", delivery_hint: "5–10 days" },
-  { slug: "express", label: "Express courier", delivery_hint: "1–2 days" },
-  { slug: "standard", label: "Standard parcel", delivery_hint: "4–8 days" },
+  { slug: "air", label: "Air freight", delivery_hint: "2-5 business days" },
+  { slug: "sea", label: "Ocean freight", delivery_hint: "15-30 days" },
+  { slug: "road", label: "Road freight", delivery_hint: "3-7 days" },
+  { slug: "rail", label: "Rail freight", delivery_hint: "5-10 days" },
+  { slug: "express", label: "Express courier", delivery_hint: "1-2 days" },
+  { slug: "standard", label: "Standard parcel", delivery_hint: "4-8 days" },
 ];
 
 const STEPS = [
@@ -211,6 +211,7 @@ export function BookShipmentForm({
   const [loading, setLoading] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [bookedTracking, setBookedTracking] = useState<string | null>(null);
+  const [bookedShipmentId, setBookedShipmentId] = useState<string | null>(null);
 
   const [serviceType, setServiceType] = useState<ServiceType>("air");
   const [bookableServices, setBookableServices] =
@@ -363,21 +364,28 @@ export function BookShipmentForm({
       specialInstructions: specialInstructions || undefined,
     };
 
-    const result = await createShipment(payload);
-    setLoading(false);
+    try {
+      const result = await createShipment(payload);
 
-    if (result.error) {
-      toast.error(result.error);
-      return;
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      setBookedTracking(result.shipment?.tracking_number ?? null);
+      setBookedShipmentId(result.shipment?.id ?? null);
+      setSuccessOpen(true);
+    } catch {
+      toast.error("Could not complete your booking. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    setBookedTracking(result.shipment?.tracking_number ?? null);
-    setSuccessOpen(true);
   }
 
   function resetForm() {
     setSuccessOpen(false);
     setBookedTracking(null);
+    setBookedShipmentId(null);
     setStep("service");
     setExpress(false);
     setInsurance(false);
@@ -466,13 +474,22 @@ export function BookShipmentForm({
 
             <FieldGrid cols={2}>
               <div className="space-y-2">
-                <Label htmlFor="reference">Your reference number</Label>
+                <Label htmlFor="reference">
+                  Your PO or order number{" "}
+                  <span className="font-normal text-muted-foreground">(optional)</span>
+                </Label>
                 <Input
                   id="reference"
                   value={referenceNumber}
                   onChange={(e) => setReferenceNumber(e.target.value)}
-                  placeholder="PO-2026-0042"
+                  placeholder="e.g. PO-2026-0042"
                 />
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  A number you already use at work — purchase order, sales order, or job code.
+                  This is <strong>not</strong> your tracking number (we create that after you
+                  book). If you add one here, it appears on your invoice so finance can match
+                  this shipment to your paperwork.
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="incoterms">Incoterms</Label>
@@ -666,7 +683,7 @@ export function BookShipmentForm({
           </SelectContent>
         </Select>
       </div>
-                  <div className="space-y-2">
+      <div className="space-y-2">
                     <Label>Quantity</Label>
                     <Input
                       type="number"
@@ -785,17 +802,26 @@ export function BookShipmentForm({
               <FieldGrid cols={2}>
                 <div className="space-y-2">
                   <Label>
-                    HS / tariff code
+                    Customs product code (HS)
                     {platformConfig.requireHsCode ? (
-                      <span className="text-destructive"> *</span>
-                    ) : null}
+                      <span className="text-destructive"> * required</span>
+                    ) : (
+                      <span className="font-normal text-muted-foreground"> (optional)</span>
+                    )}
                   </Label>
                   <Input
                     value={hsCode}
                     onChange={(e) => setHsCode(e.target.value)}
-                    placeholder="8471.30"
+                    placeholder="e.g. 8471.30 for laptops"
                     required={platformConfig.requireHsCode}
                   />
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    A standard code border agencies use to know <em>what</em> you are shipping
+                    (duties and clearance). Ask your supplier or customs broker if unsure.
+                    {platformConfig.requireHsCode
+                      ? " Your operator requires this for bookings."
+                      : " Leave blank if you do not ship internationally or do not have a code yet."}
+                  </p>
                 </div>
               </FieldGrid>
             </CardContent>
@@ -867,7 +893,9 @@ export function BookShipmentForm({
                 <p className="capitalize">{serviceType.replace(/_/g, " ")}</p>
                 {express && <p className="text-muted-foreground">Express priority</p>}
                 {insurance && <p className="text-muted-foreground">Insured for ${insuredValue || "0"}</p>}
-                {referenceNumber && <p className="text-muted-foreground">Ref: {referenceNumber}</p>}
+                {referenceNumber && (
+                  <p className="text-muted-foreground">Your PO / order: {referenceNumber}</p>
+                )}
               </div>
               <div className="rounded-lg border p-4">
                 <p className="font-semibold mb-2">Route</p>
@@ -915,7 +943,9 @@ export function BookShipmentForm({
               <div className="rounded-lg border p-4">
                 <p className="font-semibold mb-2">Additional details</p>
                 {goodsDescription && <p className="text-muted-foreground">{goodsDescription}</p>}
-                {hsCode && <p className="text-muted-foreground">HS code: {hsCode}</p>}
+                {hsCode && (
+                  <p className="text-muted-foreground">Customs code (HS): {hsCode}</p>
+                )}
                 {schedulePickup && pickupDate && (
                   <p className="text-muted-foreground">
                     Pickup: {pickupDate} {pickupTime && `(${pickupTime})`}
@@ -941,7 +971,7 @@ export function BookShipmentForm({
         ) : (
           <Button type="button" onClick={submit} disabled={loading} className="gap-2">
             {loading ? "Booking…" : "Confirm & book shipment"}
-          </Button>
+      </Button>
         )}
       </div>
 
@@ -976,7 +1006,9 @@ export function BookShipmentForm({
         }}
         secondaryAction={{
           label: "Track shipment",
-          href: bookedTracking ? `/tracking?number=${bookedTracking}` : "/app/portal/track",
+          href: bookedShipmentId
+            ? `/app/portal/track/${bookedShipmentId}`
+            : "/app/portal/track",
         }}
         tertiaryAction={{
           label: "Book another shipment",

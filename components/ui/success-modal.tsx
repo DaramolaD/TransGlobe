@@ -42,7 +42,7 @@ type SuccessModalProps = {
 
 function SuccessIllustration() {
   return (
-    <div className="relative mx-auto flex h-36 w-36 items-center justify-center">
+    <div className="relative mx-auto flex h-28 w-28 sm:h-36 sm:w-36 items-center justify-center">
       <motion.div
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -59,9 +59,9 @@ function SuccessIllustration() {
         initial={{ scale: 0, rotate: -20 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 320, damping: 14, delay: 0.18 }}
-        className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
+        className="relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
       >
-        <Check className="h-10 w-10" strokeWidth={2.5} />
+        <Check className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={2.5} />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 8 }}
@@ -135,19 +135,19 @@ export function SuccessModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="overflow-hidden border-0 p-0 sm:max-w-md"
+        className="flex max-h-[min(90dvh,640px)] w-[calc(100%-1rem)] flex-col overflow-hidden border-0 p-0 sm:max-w-md"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <div className="bg-gradient-to-b from-emerald-50/80 to-background px-6 pt-8 pb-2 dark:from-emerald-950/20">
+        <div className="shrink-0 bg-gradient-to-b from-emerald-50/80 to-background px-4 pt-6 pb-2 sm:px-6 sm:pt-8 dark:from-emerald-950/20">
           <SuccessIllustration />
         </div>
 
-        <div className="px-6 pb-6">
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 sm:px-6 sm:pb-6">
           <DialogHeader className="text-center sm:text-center">
-            <DialogTitle className="text-xl">{title}</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">{title}</DialogTitle>
             {description ? (
-              <DialogDescription className="text-base leading-relaxed">
+              <DialogDescription className="text-sm sm:text-base leading-relaxed">
                 {description}
               </DialogDescription>
             ) : null}
@@ -158,14 +158,22 @@ export function SuccessModal({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 }}
-              className="mt-5 rounded-xl border bg-muted/40 p-4"
+              className="mt-4 sm:mt-5 rounded-xl border bg-muted/40 p-3 sm:p-4"
             >
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 {highlightLabel ?? "Reference"}
               </p>
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <p className="font-mono text-lg font-semibold tracking-wide">{highlightValue}</p>
-                <Button type="button" variant="outline" size="sm" onClick={copyHighlight}>
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                <p className="font-mono text-base sm:text-lg font-semibold tracking-wide break-all">
+                  {highlightValue}
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full shrink-0 sm:w-auto"
+                  onClick={copyHighlight}
+                >
                   <Copy className="h-4 w-4 mr-1.5" />
                   Copy
                 </Button>
@@ -174,17 +182,20 @@ export function SuccessModal({
           ) : null}
 
           {details && details.length > 0 ? (
-            <ul className="mt-4 space-y-2 rounded-xl border p-4 text-sm">
+            <ul className="mt-4 space-y-2 rounded-xl border p-3 sm:p-4 text-sm">
               {details.map((item) => (
-                <li key={item.label} className="flex items-center justify-between gap-4">
+                <li
+                  key={item.label}
+                  className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+                >
                   <span className="text-muted-foreground">{item.label}</span>
-                  <span className="font-medium text-right">{item.value}</span>
+                  <span className="font-medium sm:text-right break-words">{item.value}</span>
                 </li>
               ))}
             </ul>
           ) : null}
 
-          <DialogFooter className="mt-6 flex-col gap-2 sm:flex-col">
+          <DialogFooter className="mt-5 sm:mt-6 flex-col gap-2 sm:flex-col">
             {primaryAction ? <ActionButton action={primaryAction} /> : null}
             {secondaryAction ? <ActionButton action={{ ...secondaryAction, variant: secondaryAction.variant ?? "outline" }} /> : null}
             {tertiaryAction ? (

@@ -2,14 +2,15 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureUserProfile } from "@/lib/auth/ensure-profile";
 
+import { resolveSiteUrlFromRequest } from "@/lib/auth/site-url";
+
 /**
  * Handles Supabase auth redirects (password recovery, email confirm, magic link).
- * Configure in Supabase Dashboard → Authentication → URL Configuration:
- * - Site URL: http://localhost:3000 (or your production domain)
- * - Redirect URLs: http://localhost:3000/auth/callback
+ * Allowlist in Supabase → Authentication → URL Configuration (see DEV_CREDENTIALS.md).
  */
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
+  const origin = resolveSiteUrlFromRequest(request);
   const code = searchParams.get("code");
   const next = searchParams.get("next") ?? "/app";
 

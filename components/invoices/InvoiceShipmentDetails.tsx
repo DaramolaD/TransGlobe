@@ -126,17 +126,24 @@ export function InvoiceShipmentDetails({
         </DeliveryReceiptCard>
       ) : null}
 
-      {(details.goodsDescription || details.referenceNumber) && (
+      {(details.goodsDescription || details.referenceNumber || details.hsCode) && (
         <div className="text-sm space-y-1 rounded-lg border bg-muted/20 px-4 py-3">
           {details.referenceNumber ? (
             <p>
-              <span className="text-muted-foreground">Your reference:</span>{" "}
+              <span className="text-muted-foreground">Your PO / order ref:</span>{" "}
               <span className="font-medium">{details.referenceNumber}</span>
             </p>
           ) : null}
           {details.goodsDescription ? (
             <p>
-              <span className="text-muted-foreground">Contents:</span> {details.goodsDescription}
+              <span className="text-muted-foreground">Goods description:</span>{" "}
+              {details.goodsDescription}
+            </p>
+          ) : null}
+          {details.hsCode ? (
+            <p>
+              <span className="text-muted-foreground">Customs code (HS):</span>{" "}
+              <span className="font-medium font-mono">{details.hsCode}</span>
             </p>
           ) : null}
         </div>
